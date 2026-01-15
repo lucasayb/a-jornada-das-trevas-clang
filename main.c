@@ -11,6 +11,16 @@ typedef struct {
   bool onGround;
 } Player;
 
+Player createPlayer(float x, float y) {
+  Player player = {
+    .rect = (Rectangle){ x, y, 50, 50 },
+    .health = 100.0f,
+    .isAlive = true,
+    .onGround = true,
+  };
+  return player;
+}
+
 typedef struct {
   Rectangle rect;
   float health;
@@ -25,11 +35,6 @@ Enemy createEnemy(float x, float y) {
     .collided = false,
     .rect = (Rectangle){ x, y, 25, 70 }
   };
-
-  // Enemy enemy;
-  // enemy.health = 100.0f;
-  // enemy.isAlive = true;
-  // enemy.rect = (Rectangle){ x, y, 70, 25 };
   return enemy;
 }
 
@@ -43,13 +48,7 @@ int main() {
     const float jumpSpeed = 650.0f; // Velocidade inicial do pulo
     const float groundY = 390.0f; // Posição Y do chão
 
-    Player player = {
-      .rect = { 100, groundY - 50, 50, 50 },
-      .health = 100.0f,
-      .isAlive = true,
-      .onGround = true,
-    };
-
+    Player player = createPlayer(100, groundY - 50);
     Enemy enemy1 = createEnemy(400, groundY - 70);
 
     while (!WindowShouldClose()) {
@@ -94,17 +93,23 @@ int main() {
           player.onGround = true;
         }
 
+        // GROUND
+        DrawRectangle(-6000, groundY, 18000, 330, GRAY);
+
+        // PLAYER
+        DrawRectangleRec(player.rect, BLUE);
+
+        // ENEMY
+        DrawRectangleRec(enemy1.rect, ORANGE);
+
+        // DEBUG SECTION
         char debugText[255];
         int fontSize = 16;
         int textWidth = MeasureText(debugText, fontSize);
         int debugBoxHeight = 50;
 
         snprintf(debugText, sizeof(debugText), "vy = %f\tonGround = %i\tplayer.y = %f\tenemy1.collided = %i", vy, player.onGround, player.rect.y, enemy1.collided);
-
-        DrawRectangle(-6000, groundY, 18000, 330, GRAY);
-        DrawRectangleRec(player.rect, BLUE);
         DrawRectangle(0, SCREEN_HEIGHT - debugBoxHeight, SCREEN_WIDTH, debugBoxHeight, BLACK);
-        DrawRectangleRec(enemy1.rect, ORANGE);
         DrawText(debugText, 20, SCREEN_HEIGHT - debugBoxHeight / 2 - fontSize, fontSize, WHITE);
       EndDrawing();
     }
