@@ -43,9 +43,6 @@ int main() {
     const float jumpSpeed = 650.0f; // Velocidade inicial do pulo
     const float groundY = 390.0f; // Posição Y do chão
 
-    Color playerColor = { 255, 125, 70, 255 };
-    Color groundColor = { 220, 220, 220, 255 };
-
     Player player = {
       .rect = { 100, groundY - 50, 50, 50 },
       .health = 100.0f,
@@ -104,8 +101,8 @@ int main() {
 
         snprintf(debugText, sizeof(debugText), "vy = %f\tonGround = %i\tplayer.y = %f\tenemy1.collided = %i", vy, player.onGround, player.rect.y, enemy1.collided);
 
-        DrawRectangle(-6000, groundY, 18000, 330, groundColor);
-        DrawRectangleRec(player.rect, playerColor);
+        DrawRectangle(-6000, groundY, 18000, 330, GRAY);
+        DrawRectangleRec(player.rect, BLUE);
         DrawRectangle(0, SCREEN_HEIGHT - debugBoxHeight, SCREEN_WIDTH, debugBoxHeight, BLACK);
         DrawRectangleRec(enemy1.rect, ORANGE);
         DrawText(debugText, 20, SCREEN_HEIGHT - debugBoxHeight / 2 - fontSize, fontSize, WHITE);
