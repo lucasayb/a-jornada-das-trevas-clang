@@ -39,7 +39,7 @@ int main() {
         // Y = 200
         // Y = 720  ← fundo da tela
 
-        if ((IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_SPACE)) & (onGround)) {
+        if ((IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_SPACE)) && (onGround)) {
           vy = -jumpSpeed; // -650 pixels/segundo (negativo = pra cima)
           onGround = false;
         }
