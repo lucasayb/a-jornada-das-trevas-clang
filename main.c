@@ -11,6 +11,12 @@ typedef struct {
   bool onGround;
 } Player;
 
+typedef struct {
+  float rotation;
+  Rectangle rect;
+  bool collided;
+} Sword;
+
 Player createPlayer(float x, float y) {
   Player player = {
     .rect = (Rectangle){ x, y, 50, 50 },
@@ -50,24 +56,45 @@ int main() {
 
     Player player = createPlayer(100, groundY - 50);
     Enemy enemy1 = createEnemy(400, groundY - 70);
+    Sword sword = {
+      .collided = true,
+      .rect = (Rectangle) {
+        .x = player.rect.x,
+        .y = player.rect.y,
+        .height = 10,
+        .width = 60
+      },
+      .rotation = 45.0f
+    };
 
     while (!WindowShouldClose()) {
       float dt = GetFrameTime();
       float speed = 200.0f;
       enemy1.collided = false;
+      sword.collided = false;
 
       ClearBackground(WHITE);
       BeginDrawing();
         if (IsKeyDown(KEY_RIGHT)) {
           player.rect.x += speed * dt;
+          sword.rect.x += speed * dt;
         }
 
         if (IsKeyDown(KEY_LEFT)) {
           player.rect.x -= speed * dt;
+          sword.rect.x -= speed * dt;
         }
 
+        // Check collision between player and enemy
         if (CheckCollisionRecs(enemy1.rect, player.rect)) {
           enemy1.collided = true;
+        }
+
+        // Check collision between sword and enemy
+        if (CheckCollisionRecs(sword.rect, enemy1.rect) && IsKeyPressed(KEY_F)) {
+          sword.collided = true;
+          enemy1.collided = true;
+          enemy1.health -= 20;
         }
 
         // O player estava parado (vy = 0)
@@ -85,10 +112,11 @@ int main() {
 
         vy += gravity * dt; // Aumenta a velocidade vertical
         player.rect.y += vy * dt; // Aplica a velocidade na posição
-
+        sword.rect.y += vy * dt; // Aplica a velocidade na posição
         float floorY = groundY - player.rect.height;
         if (player.rect.y > floorY) {
           player.rect.y = floorY;
+          sword.rect.y = floorY;
           vy = 0.0f;
           player.onGround = true;
         }
@@ -98,9 +126,12 @@ int main() {
 
         // PLAYER
         DrawRectangleRec(player.rect, BLUE);
+        DrawRectangleRec(sword.rect, GREEN);
 
-        // ENEMY
-        DrawRectangleRec(enemy1.rect, ORANGE);
+        if (enemy1.health >= 0) {
+          // ENEMY
+          DrawRectangleRec(enemy1.rect, ORANGE);
+        }
 
         // DEBUG SECTION
         char debugText[255];
@@ -108,7 +139,19 @@ int main() {
         int textWidth = MeasureText(debugText, fontSize);
         int debugBoxHeight = 50;
 
-        snprintf(debugText, sizeof(debugText), "vy = %f\tonGround = %i\tplayer.y = %f\tenemy1.collided = %i", vy, player.onGround, player.rect.y, enemy1.collided);
+        snprintf(debugText,
+          sizeof(debugText),
+          "vy = %f\t\
+          onGround = %i\t\
+          player.y = %f\t\
+          enemy1.collided = %i\t\
+          sword.collided = %i\t\
+          enemy1.health = %f",
+          vy,
+          player.onGround, player.rect.y,
+          enemy1.collided, sword.collided,
+          enemy1.health
+        );
         DrawRectangle(0, SCREEN_HEIGHT - debugBoxHeight, SCREEN_WIDTH, debugBoxHeight, BLACK);
         DrawText(debugText, 20, SCREEN_HEIGHT - debugBoxHeight / 2 - fontSize, fontSize, WHITE);
       EndDrawing();
