@@ -1,5 +1,6 @@
 #include "physics.h"
 #include "player.h"
+#include "enemy.h"
 #include <raylib.h>
 
 void applyPhysics(Player *player, Sword *sword, Enemy *enemy, float dt) {

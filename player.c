@@ -1,4 +1,5 @@
 #include "player.h"
+#include "enemy.h"
 #include <raylib.h>
 
 Player createPlayer(float x, float y) {

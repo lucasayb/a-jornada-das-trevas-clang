@@ -3,6 +3,7 @@
 
 #include <raylib.h>
 #include "player.h"
+#include "enemy.h"
 
 #define GRAVITY 1800.0f // Aceleração da Gravidade (pixels/s²)
 #define GROUND_Y 390.0f // Posição Y do chão

@@ -3,6 +3,7 @@
 #include "ground.h"
 #include "physics.h"
 #include "player.h"
+#include "enemy.h"
 #include <raylib.h>
 #include <stdatomic.h>
 #include <stdio.h>
