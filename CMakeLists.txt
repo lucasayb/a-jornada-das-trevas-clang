@@ -7,6 +7,7 @@ find_package(raylib 4.0 REQUIRED)
 
 add_executable(a_jaqueta_das_trevas
   debug.c
+  ground.c
   enemy.c
   main.c
   physics.c

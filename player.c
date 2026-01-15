@@ -36,16 +36,23 @@ void updatePlayer(Player *player, Sword *sword, float dt) {
 
   sword->rect.x = player->rect.x + player->rect.width;
   sword->rect.y = player->rect.y - 20;
+
+  if ((IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_SPACE)) && (player->onGround)) {
+    player->vy =
+        -player->jumpSpeed; // -650 pixels/segundo (negativo = pra cima)
+    player->onGround = false;
+  }
 }
 
 bool checkSwordHitbox(Sword *sword, Enemy *enemy) {
-  if (!IsKeyPressed(KEY_F)) return false;
+  if (!IsKeyPressed(KEY_F))
+    return false;
 
   // Check collision between sword and enemy
   return CheckCollisionRecs(sword->rect, enemy->rect);
 }
 
-void drawPlayer(Player* player, Sword* sword) {
+void drawPlayer(Player *player, Sword *sword) {
   // PLAYER
   DrawRectangleRec(player->rect, BLUE);
   DrawRectangleRec(sword->rect, GREEN);

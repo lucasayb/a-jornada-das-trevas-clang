@@ -12,12 +12,6 @@ void applyPhysics(Player *player, Sword *sword, Enemy *enemy, float dt) {
   // Y = 200
   // Y = 720  <- fundo da tela
 
-  if ((IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_SPACE)) && (player->onGround)) {
-    player->vy =
-        -player->jumpSpeed; // -650 pixels/segundo (negativo = pra cima)
-    player->onGround = false;
-  }
-
   player->vy += GRAVITY * dt;        // Aumenta a velocidade vertical
   player->rect.y += player->vy * dt; // Aplica a velocidade na posição
   sword->rect.y += player->vy * dt;  // Aplica a velocidade na posição
@@ -28,9 +22,6 @@ void applyPhysics(Player *player, Sword *sword, Enemy *enemy, float dt) {
     player->vy = 0.0f;
     player->onGround = true;
   }
-
-  // GROUND
-  DrawRectangle(-6000, GROUND_Y, 18000, 330, GRAY);
 
   // Check collision between player and enemy
   if (CheckCollisionRecs(enemy->rect, player->rect)) {

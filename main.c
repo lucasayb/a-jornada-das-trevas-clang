@@ -1,5 +1,6 @@
 #include "config.h"
 #include "debug.h"
+#include "ground.h"
 #include "physics.h"
 #include "player.h"
 #include <raylib.h>
@@ -22,6 +23,7 @@ int main() {
     updatePlayer(&player, &sword, dt);
     drawPlayer(&player, &sword);
     drawEnemy(&enemy);
+    drawGround();
     applyPhysics(&player, &sword, &enemy, dt);
     initDebug(&player, &enemy, &sword);
     EndDrawing();
