@@ -23,6 +23,8 @@ void applyPhysics(Player *player, Sword *sword, Enemy *enemy, float dt) {
     player->onGround = true;
   }
 
+  if (enemy->health <= 0) return;
+
   // Check collision between player and enemy
   if (CheckCollisionRecs(enemy->rect, player->rect)) {
     enemy->collided = true;
@@ -30,7 +32,6 @@ void applyPhysics(Player *player, Sword *sword, Enemy *enemy, float dt) {
 
   // Check collision between sword and enemy
   if (checkSwordHitbox(sword, enemy)) {
-    if (enemy->health <= 0) return;
     sword->collided = true;
     enemy->collided = true;
     enemy->health -= 20;
