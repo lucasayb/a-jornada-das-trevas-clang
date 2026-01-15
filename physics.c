@@ -14,7 +14,6 @@ void applyPhysics(Player *player, Sword *sword, Enemy *enemy, float dt) {
 
   player->vy += GRAVITY * dt;        // Aumenta a velocidade vertical
   player->rect.y += player->vy * dt; // Aplica a velocidade na posição
-  sword->rect.y += player->vy * dt;  // Aplica a velocidade na posição
   float floorY = GROUND_Y - player->rect.height;
   if (player->rect.y > floorY) {
     player->rect.y = floorY;

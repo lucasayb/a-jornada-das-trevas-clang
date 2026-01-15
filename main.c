@@ -20,11 +20,12 @@ int main() {
 
     ClearBackground(WHITE);
     BeginDrawing();
+    applyPhysics(&player, &sword, &enemy, dt);
     updatePlayer(&player, &sword, dt);
+
+    drawGround();
     drawPlayer(&player, &sword);
     drawEnemy(&enemy);
-    drawGround();
-    applyPhysics(&player, &sword, &enemy, dt);
     initDebug(&player, &enemy, &sword);
     EndDrawing();
   }

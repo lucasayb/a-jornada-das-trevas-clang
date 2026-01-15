@@ -34,14 +34,14 @@ void updatePlayer(Player *player, Sword *sword, float dt) {
     player->rect.x -= player->speed * dt;
   }
 
-  sword->rect.x = player->rect.x + player->rect.width;
-  sword->rect.y = player->rect.y - 20;
-
   if ((IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_SPACE)) && (player->onGround)) {
     player->vy =
         -player->jumpSpeed; // -650 pixels/segundo (negativo = pra cima)
     player->onGround = false;
   }
+
+  sword->rect.x = player->rect.x + player->rect.width;
+  sword->rect.y = player->rect.y - 20;
 }
 
 bool checkSwordHitbox(Sword *sword, Enemy *enemy) {
