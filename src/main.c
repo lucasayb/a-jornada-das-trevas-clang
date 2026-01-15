@@ -10,7 +10,7 @@
 
 int main() {
   InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "A Jaqueta das Trevas");
-  SetTargetFPS(60);
+  SetTargetFPS(FPS);
 
   Player player = createPlayer(100, GROUND_Y - 50);
   Sword sword = createSword(&player);
