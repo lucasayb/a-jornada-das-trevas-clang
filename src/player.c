@@ -3,7 +3,7 @@
 #include <raylib.h>
 
 Player createPlayer(float x, float y) {
-  Player player = {.rect = (Rectangle){x, y, 50, 50},
+  Player player = {.rect = (Rectangle){x, y, 25, 70},
                    .health = 100.0f,
                    .isAlive = true,
                    .onGround = true,
@@ -42,7 +42,7 @@ void updatePlayer(Player *player, Sword *sword, float dt) {
   }
 
   sword->rect.x = player->rect.x + player->rect.width;
-  sword->rect.y = player->rect.y - 20;
+  sword->rect.y = player->rect.y + 10;
 }
 
 bool checkSwordHitbox(Sword *sword, Enemy *enemy) {
