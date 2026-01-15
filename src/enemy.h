@@ -12,5 +12,5 @@ typedef struct {
 
 Enemy createEnemy(float x, float y);
 void drawEnemy(Enemy *enemy);
-
+void drawEnemyHealthBar(Enemy* enemy);
 #endif
