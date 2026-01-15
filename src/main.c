@@ -5,6 +5,7 @@
 #include "gameState.h"
 #include "physics.h"
 #include "player.h"
+#include "textureLoader.h"
 #include "titleScreen.h"
 #include <raylib.h>
 #include <stdatomic.h>
@@ -17,14 +18,14 @@ int main() {
   GameScreen currentScreen = SCREEN_TITLE;
   Player player = createPlayer(100, GROUND_Y - 50);
   Sword sword = createSword(&player);
-  Enemy enemy = createEnemy(400, GROUND_Y - 70);
+  Enemy enemy = createEnemy(400, GROUND_Y - 42 * 2);
 
   while (!WindowShouldClose()) {
     float dt = GetFrameTime();
     switch (currentScreen) {
     case SCREEN_TITLE:
-      drawTitleScreen();
       if (IsKeyPressed(KEY_ENTER)) {
+        loadGameplayTextures();
         currentScreen = SCREEN_GAMEPLAY;
       }
       break;
@@ -34,23 +35,22 @@ int main() {
       break;
     }
 
-    ClearBackground(WHITE);
-
     BeginDrawing();
+    ClearBackground(WHITE);
     switch (currentScreen) {
     case SCREEN_TITLE:
-
+      drawTitleScreen();
       break;
     case SCREEN_GAMEPLAY:
       createGameplay(&player, &sword, &enemy, dt);
       break;
     case SCREEN_GAMEOVER:
-
       break;
     }
     EndDrawing();
   }
 
+  unloadGameplayTextures();
   CloseWindow();
   return 0;
 }

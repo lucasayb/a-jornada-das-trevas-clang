@@ -1,6 +1,6 @@
 #include "config.h"
-#include "player.h"
 #include "enemy.h"
+#include "player.h"
 #include <raylib.h>
 #include <stdio.h>
 

@@ -5,6 +5,7 @@
 
 typedef struct {
   Rectangle rect;
+  Rectangle healthbarRect;
   float health;
   bool isAlive;
   bool collided;

@@ -13,6 +13,7 @@ add_executable(a_jaqueta_das_trevas
   src/main.c
   src/physics.c
   src/player.c
+  src/textureLoader.c
   src/titleScreen.c
 )
 

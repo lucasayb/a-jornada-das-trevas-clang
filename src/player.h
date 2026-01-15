@@ -12,6 +12,8 @@ typedef struct {
   float vy;
   float jumpSpeed;
   float speed;
+  int frame;
+  Rectangle spriteRect;
 } Player;
 
 typedef struct {
