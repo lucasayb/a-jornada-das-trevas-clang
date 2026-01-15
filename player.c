@@ -28,13 +28,14 @@ void updatePlayer(Player *player, Sword *sword, float dt) {
 
   if (IsKeyDown(KEY_RIGHT)) {
     player->rect.x += player->speed * dt;
-    sword->rect.x += player->speed * dt;
   }
 
   if (IsKeyDown(KEY_LEFT)) {
     player->rect.x -= player->speed * dt;
-    sword->rect.x -= player->speed * dt;
   }
+
+  sword->rect.x = player->rect.x + player->rect.width;
+  sword->rect.y = player->rect.y - 20;
 }
 
 bool checkSwordHitbox(Sword *sword, Enemy *enemy) {

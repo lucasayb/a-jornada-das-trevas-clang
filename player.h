@@ -2,9 +2,7 @@
 #define PLAYER_H
 
 #include <raylib.h>
-
-// Forward declaration para Enemy
-typedef struct Enemy Enemy;
+#include "enemy.h"
 
 typedef struct {
   Rectangle rect;
