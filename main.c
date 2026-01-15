@@ -72,12 +72,12 @@ int main() {
         }
 
         // O player estava parado (vy = 0)
-        // Pressiona espaço -> (vy = -650) -- Velocidade para cima
+        // Pressiona espaço (vy = -650) <- Velocidade para cima
         // No Raylib (e maioria dos sistemas gráficos), Y cresce pra baixo
-        // Y = 0    ← topo da tela
+        // Y = 0    <- topo da tela
         // Y = 100
         // Y = 200
-        // Y = 720  ← fundo da tela
+        // Y = 720  <- fundo da tela
 
         if ((IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_SPACE)) && (player.onGround)) {
           vy = -jumpSpeed; // -650 pixels/segundo (negativo = pra cima)
