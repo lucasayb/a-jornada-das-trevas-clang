@@ -9,9 +9,11 @@ add_executable(a_jaqueta_das_trevas
   src/debug.c
   src/ground.c
   src/enemy.c
+  src/game.c
   src/main.c
   src/physics.c
   src/player.c
+  src/titleScreen.c
 )
 
 target_link_libraries(a_jaqueta_das_trevas raylib)
