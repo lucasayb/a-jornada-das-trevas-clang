@@ -1,8 +1,10 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "enemy.h"
 #include <raylib.h>
+
+// Forward declaration para Enemy
+typedef struct Enemy Enemy;
 
 typedef struct {
   Rectangle rect;
@@ -28,6 +30,6 @@ void updatePlayer(Player *player, Sword *sword, float dt);
 
 bool checkSwordHitbox(Sword *sword, Enemy *enemy);
 
-void drawPlayer(Player* player, Sword* sword);
+void drawPlayer(Player *player, Sword *sword);
 
 #endif
