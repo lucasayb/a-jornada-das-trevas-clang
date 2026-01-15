@@ -3,6 +3,7 @@
 #define SCREEN_HEIGHT 720
 #define PLAYER_STEPS 5
 
+
 int main() {
   InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "A Jaqueta das Trevas");
     SetTargetFPS(60);
@@ -20,6 +21,11 @@ int main() {
         if (IsKeyDown(KEY_LEFT)) {
           player.x -= PLAYER_STEPS;
         }
+        if (IsKeyPressed(KEY_UP)) {
+          player.y -= 10;
+        }
+
+
         DrawRectangle(-6000, 360, 18000, 360, groundColor);
         DrawRectangleRec(player, playerColor);
       EndDrawing();
