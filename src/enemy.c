@@ -23,7 +23,7 @@ void drawEnemy(Enemy *enemy) {
     // ENEMY
     // DrawRectangleRec(enemy->rect, ORANGE);
     Vector2 origin = {0, 0};
-    Rectangle source = {0, 0, 42, 42};
+    Rectangle source = {0, 0, -42, 42};
     DrawTexturePro(enemyTexture, source, enemy->rect, origin, 0, WHITE);
     drawEnemyHealthBar(enemy);
   }
