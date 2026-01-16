@@ -63,8 +63,23 @@ void updatePlayer(Player *player, Sword *sword, float dt) {
     handleJump(player);
     break;
   case STATE_WALKING:
-    player->spriteFrame = 0;
-    player->spriteLine = 4;
+    player->spriteLine = 3;
+    player->stateTimer += dt;
+
+    if (player->stateTimer >= 0.1f) {
+      player->stateTimer = 0;
+      player->spriteFrame++;
+      if (player->spriteFrame > 7) {
+        player->spriteFrame = 0;
+      }
+    }
+
+    if (!IsKeyDown(KEY_LEFT) && !IsKeyDown(KEY_RIGHT)) {
+      player->state = STATE_IDLE;
+      player->spriteFrame = 0;
+      player->spriteLine = 0;
+    }
+
     handleJump(player);
 
     handleWalk(player, dt);
