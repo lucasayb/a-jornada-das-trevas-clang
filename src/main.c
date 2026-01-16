@@ -17,7 +17,6 @@ int main() {
 
   GameScreen currentScreen = SCREEN_TITLE;
   Player player = createPlayer(100, GROUND_Y - 50);
-  Sword sword = createSword(&player);
   Enemy enemy = createEnemy(400, GROUND_Y - 42 * 2);
 
   while (!WindowShouldClose()) {
@@ -36,13 +35,13 @@ int main() {
     }
 
     BeginDrawing();
-    ClearBackground(WHITE);
+    ClearBackground(LIGHTGRAY);
     switch (currentScreen) {
     case SCREEN_TITLE:
       drawTitleScreen();
       break;
     case SCREEN_GAMEPLAY:
-      createGameplay(&player, &sword, &enemy, dt);
+      createGameplay(&player, &enemy, dt);
       break;
     case SCREEN_GAMEOVER:
       break;

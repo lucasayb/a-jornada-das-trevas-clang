@@ -5,6 +5,6 @@
 #include "enemy.h"
 #include <raylib.h>
 
-void initDebug(Player *player, Enemy *enemy, Sword *sword);
+void initDebug(Player *player, Enemy *enemy);
 
 #endif

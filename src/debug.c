@@ -4,7 +4,7 @@
 #include <raylib.h>
 #include <stdio.h>
 
-void initDebug(Player *player, Enemy *enemy, Sword *sword) {
+void initDebug(Player *player, Enemy *enemy) {
 
   // DEBUG SECTION
   char debugText[255];
@@ -17,14 +17,12 @@ void initDebug(Player *player, Enemy *enemy, Sword *sword) {
     onGround = %i\t\
     player.state = %i\t\
     enemy1.collided = %i\t\
-    sword.collided = %i\t\
     player.direction = %i\t\
     enemy1.health = %f",
            player->vy,
            player->onGround,
            player->state,
            enemy->collided,
-           sword->collided,
            player->direction,
            enemy->health
   );

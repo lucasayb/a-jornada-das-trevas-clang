@@ -3,7 +3,7 @@
 #include "enemy.h"
 #include <raylib.h>
 
-void applyPhysics(Player *player, Sword *sword, Enemy *enemy, float dt) {
+void applyPhysics(Player *player, Enemy *enemy, float dt) {
   enemy->collided = false;
   // O player estava parado (vy = 0)
   // Pressiona espaço (vy = -650) <- Velocidade para cima
@@ -18,7 +18,6 @@ void applyPhysics(Player *player, Sword *sword, Enemy *enemy, float dt) {
   float floorY = GROUND_Y - player->rect.height;
   if (player->rect.y > floorY) {
     player->rect.y = floorY;
-    sword->rect.y = floorY;
     player->vy = 0.0f;
     player->onGround = true;
   }
@@ -28,12 +27,5 @@ void applyPhysics(Player *player, Sword *sword, Enemy *enemy, float dt) {
   // Check collision between player and enemy
   if (CheckCollisionRecs(enemy->rect, player->rect)) {
     enemy->collided = true;
-  }
-
-  // Check collision between sword and enemy
-  if (checkSwordHitbox(sword, enemy)) {
-    sword->collided = true;
-    enemy->collided = true;
-    enemy->health -= 2;
   }
 }

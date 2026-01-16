@@ -7,7 +7,9 @@
 typedef enum {
   STATE_IDLE,
   STATE_WALKING,
+  STATE_ATTACK_PREPARE,
   STATE_ATTACKING,
+  STATE_ATTACK_STOP,
   STATE_JUMP_PREPARE,
   STATE_JUMPING,
   STATE_JUMP_LAND
@@ -39,10 +41,10 @@ Player createPlayer(float x, float y);
 
 Sword createSword(Player *player);
 
-void updatePlayer(Player *player, Sword *sword, float dt);
+void updatePlayer(Player *player, Enemy *enemy, float dt);
 
 bool checkSwordHitbox(Sword *sword, Enemy *enemy);
 
-void drawPlayer(Player *player, Sword *sword);
+void drawPlayer(Player *player);
 
 #endif

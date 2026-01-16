@@ -1,5 +1,4 @@
 #include "player.h"
-#include "enemy.h"
 #include "textureLoader.h"
 #include <raylib.h>
 #include <stdatomic.h>
@@ -19,17 +18,6 @@ Player createPlayer(float x, float y) {
                    .stateTimer = 0.0f,
                    .speed = 200.0f};
   return player;
-}
-
-Sword createSword(Player *player) {
-  Sword sword = {.collided = true,
-                 .rect = (Rectangle){.x = player->rect.x,
-                                     .y = player->rect.y,
-                                     .height = 10,
-                                     .width = 60},
-                 .rotation = 45.0f};
-
-  return sword;
 }
 
 void handleJump(Player *player) {
@@ -52,15 +40,21 @@ void handleWalk(Player *player, float dt) {
   }
 }
 
-void updatePlayer(Player *player, Sword *sword, float dt) {
-  sword->collided = false;
+void handleAttack(Player *player) {
+  if (IsKeyDown(KEY_F)) {
+    player->spriteLine = 8;
+    player->state = STATE_ATTACK_PREPARE;
+  }
+}
 
+void updatePlayer(Player *player, Enemy *enemy, float dt) {
   switch (player->state) {
   case STATE_IDLE:
     if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_LEFT)) {
       player->state = STATE_WALKING;
     }
     handleJump(player);
+    handleAttack(player);
     break;
   case STATE_WALKING:
     player->spriteLine = 3;
@@ -81,10 +75,39 @@ void updatePlayer(Player *player, Sword *sword, float dt) {
     }
 
     handleJump(player);
-
+    handleAttack(player);
     handleWalk(player, dt);
     break;
+  case STATE_ATTACK_PREPARE:
+    player->stateTimer += dt;
+    player->spriteFrame = 1;
+    if (player->stateTimer >= 0.1f) {
+      player->state = STATE_ATTACKING;
+    }
+    break;
   case STATE_ATTACKING:
+    player->stateTimer += dt;
+    // Check collision between sword and enemy
+    if (player->stateTimer >= 0.1f) {
+      player->spriteFrame++;
+      player->stateTimer = 0;
+    }
+
+    if (player->spriteFrame == 3) {
+      if (CheckCollisionRecs(enemy->rect, player->rect) && player->state == STATE_ATTACKING) {
+        enemy->health -= 2;
+        enemy->collided = true;
+      }
+    }
+
+    if (player->spriteFrame == 7) {
+      player->spriteFrame = 0;
+      player->spriteLine = 0;
+      player->state = STATE_IDLE;
+    }
+
+    break;
+  case STATE_ATTACK_STOP:
     break;
   case STATE_JUMP_PREPARE:
     player->stateTimer += dt;
@@ -121,15 +144,7 @@ void updatePlayer(Player *player, Sword *sword, float dt) {
   }
 }
 
-bool checkSwordHitbox(Sword *sword, Enemy *enemy) {
-  if (!IsKeyPressed(KEY_F))
-    return false;
-
-  // Check collision between sword and enemy
-  return CheckCollisionRecs(sword->rect, enemy->rect);
-}
-
-void drawPlayer(Player *player, Sword *sword) {
+void drawPlayer(Player *player) {
   // PLAYER
   Vector2 origin = {0, 0};
   Rectangle spriteRect = {player->spriteFrame * 32, player->spriteLine * 32,

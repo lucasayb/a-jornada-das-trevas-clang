@@ -3,5 +3,5 @@
 #include "enemy.h"
 #include "player.h"
 
-void createGameplay(Player *player, Sword *sword, Enemy *enemy, float dt);
+void createGameplay(Player *player, Enemy *enemy, float dt);
 #endif
