@@ -34,6 +34,6 @@ void applyPhysics(Player *player, Sword *sword, Enemy *enemy, float dt) {
   if (checkSwordHitbox(sword, enemy)) {
     sword->collided = true;
     enemy->collided = true;
-    enemy->health -= 20;
+    enemy->health -= 2;
   }
 }
