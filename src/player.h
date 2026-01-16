@@ -1,8 +1,17 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <raylib.h>
 #include "enemy.h"
+#include <raylib.h>
+
+typedef enum {
+  STATE_IDLE,
+  STATE_WALKING,
+  STATE_ATTACKING,
+  STATE_JUMP_PREPARE,
+  STATE_JUMPING,
+  STATE_JUMP_LAND
+} PlayerState;
 
 typedef struct {
   Rectangle rect;
@@ -14,6 +23,8 @@ typedef struct {
   float speed;
   int frame;
   Rectangle spriteRect;
+  PlayerState state;
+  float stateTimer;
 } Player;
 
 typedef struct {

@@ -12,14 +12,20 @@ void initDebug(Player *player, Enemy *enemy, Sword *sword) {
   int textWidth = MeasureText(debugText, fontSize);
   int debugBoxHeight = 50;
 
-  snprintf(debugText, sizeof(debugText), "vy = %f\t\
+  snprintf(debugText, sizeof(debugText),
+    "vy = %f\t\
     onGround = %i\t\
-    player.y = %f\t\
+    player.state = %i\t\
     enemy1.collided = %i\t\
     sword.collided = %i\t\
     enemy1.health = %f",
-           player->vy, player->onGround, player->rect.y, enemy->collided,
-           sword->collided, enemy->health);
+           player->vy,
+           player->onGround,
+           player->state,
+           enemy->collided,
+           sword->collided,
+           enemy->health
+  );
   DrawRectangle(0, SCREEN_HEIGHT - debugBoxHeight, SCREEN_WIDTH, debugBoxHeight,
                 BLACK);
   DrawText(debugText, 20, SCREEN_HEIGHT - debugBoxHeight / 2 - fontSize,
