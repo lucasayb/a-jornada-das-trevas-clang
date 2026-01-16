@@ -101,7 +101,8 @@ void updatePlayer(Player *player, Enemy *enemy, float dt) {
     }
 
     if (player->spriteFrame == 3) {
-      if (CheckCollisionRecs(enemy->rect, player->rect) && player->state == STATE_ATTACKING) {
+      if (CheckCollisionRecs(enemy->rect, player->rect) &&
+          player->state == STATE_ATTACKING) {
         enemy->health -= 2;
         enemy->collided = true;
       }
