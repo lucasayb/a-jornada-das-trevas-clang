@@ -21,7 +21,9 @@ typedef struct {
   float vy;
   float jumpSpeed;
   float speed;
-  int frame;
+  int direction;
+  int spriteFrame;
+  int spriteLine;
   Rectangle spriteRect;
   PlayerState state;
   float stateTimer;

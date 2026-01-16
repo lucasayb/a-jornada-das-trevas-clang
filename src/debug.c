@@ -18,12 +18,14 @@ void initDebug(Player *player, Enemy *enemy, Sword *sword) {
     player.state = %i\t\
     enemy1.collided = %i\t\
     sword.collided = %i\t\
+    player.direction = %i\t\
     enemy1.health = %f",
            player->vy,
            player->onGround,
            player->state,
            enemy->collided,
            sword->collided,
+           player->direction,
            enemy->health
   );
   DrawRectangle(0, SCREEN_HEIGHT - debugBoxHeight, SCREEN_WIDTH, debugBoxHeight,

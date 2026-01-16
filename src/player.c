@@ -11,7 +11,9 @@ Player createPlayer(float x, float y) {
                    .isAlive = true,
                    .onGround = true,
                    .vy = 0.0f,
-                   .spriteRect = {0, 0, 32, 32},
+                   .spriteLine = 0,
+                   .spriteFrame = 0,
+                   .direction = 1,
                    .jumpSpeed = 250.0f,
                    .state = STATE_IDLE,
                    .stateTimer = 0.0f,
@@ -30,6 +32,26 @@ Sword createSword(Player *player) {
   return sword;
 }
 
+void handleJump(Player *player) {
+  if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_SPACE)) {
+    player->state = STATE_JUMP_PREPARE;
+    player->stateTimer = 0;
+    player->spriteLine = 5;
+  }
+}
+
+void handleWalk(Player *player, float dt) {
+  if (IsKeyDown(KEY_RIGHT)) {
+    player->rect.x += player->speed * dt;
+    player->direction = 1;
+  }
+
+  if (IsKeyDown(KEY_LEFT)) {
+    player->rect.x -= player->speed * dt;
+    player->direction = -1;
+  }
+}
+
 void updatePlayer(Player *player, Sword *sword, float dt) {
   sword->collided = false;
 
@@ -38,36 +60,20 @@ void updatePlayer(Player *player, Sword *sword, float dt) {
     if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_LEFT)) {
       player->state = STATE_WALKING;
     }
-    // JUMPING
-    if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_SPACE)) {
-      player->state = STATE_JUMP_PREPARE;
-      player->stateTimer = 0;
-      player->spriteRect.x = 0 * 32;
-      player->spriteRect.y = 5 * 32;
-    }
+    handleJump(player);
     break;
   case STATE_WALKING:
-    // JUMPING
-    if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_SPACE)) {
-      player->state = STATE_JUMP_PREPARE;
-      player->stateTimer = 0;
-      player->spriteRect.x = 0 * 32;
-    }
+    player->spriteFrame = 0;
+    player->spriteLine = 4;
+    handleJump(player);
 
-    if (IsKeyDown(KEY_RIGHT)) {
-      player->rect.x += player->speed * dt;
-    }
-
-    if (IsKeyDown(KEY_LEFT)) {
-      player->rect.x -= player->speed * dt;
-    }
+    handleWalk(player, dt);
     break;
   case STATE_ATTACKING:
     break;
   case STATE_JUMP_PREPARE:
     player->stateTimer += dt;
-    player->spriteRect.x = 1 * 32;
-    player->spriteRect.y = 5 * 32;
+    player->spriteFrame = 1;
     if (player->stateTimer >= 0.1f) {
       player->vy = -player->jumpSpeed;
       player->onGround = false;
@@ -75,34 +81,31 @@ void updatePlayer(Player *player, Sword *sword, float dt) {
     }
     break;
   case STATE_JUMPING:
+    player->spriteLine = 5;
     if (player->vy < -100) {
-      player->spriteRect.x = 2 * 32;
+      player->spriteFrame = 2;
     } else if (player->vy < 0) {
-      player->spriteRect.x = 3 * 32;
+      player->spriteFrame = 3;
     } else if (player->vy < 100) {
-      player->spriteRect.x = 4 * 32;
+      player->spriteFrame = 4;
     } else {
-      player->spriteRect.x = 5 * 32;
+      player->spriteFrame = 5;
     }
 
     if (player->onGround) {
       player->state = STATE_JUMP_LAND;
       player->stateTimer = 0;
-      player->spriteRect.x = 0 * 32;
+      player->spriteFrame = 6;
     }
-    if (IsKeyDown(KEY_RIGHT)) {
-      player->rect.x += player->speed * dt;
-    }
-
-    if (IsKeyDown(KEY_LEFT)) {
-      player->rect.x -= player->speed * dt;
-    }
+    handleWalk(player, dt);
     break;
   case STATE_JUMP_LAND:
+    player->spriteFrame = 7;
     player->state = STATE_IDLE;
     break;
   }
 }
+
 bool checkSwordHitbox(Sword *sword, Enemy *enemy) {
   if (!IsKeyPressed(KEY_F))
     return false;
@@ -114,8 +117,7 @@ bool checkSwordHitbox(Sword *sword, Enemy *enemy) {
 void drawPlayer(Player *player, Sword *sword) {
   // PLAYER
   Vector2 origin = {0, 0};
-  DrawTexturePro(playerTexture, player->spriteRect, player->rect, origin, 0.0f,
-                 WHITE);
-  // DrawRectangleRec(player->rect, BLUE);
-  DrawRectangleRec(sword->rect, GREEN);
+  Rectangle spriteRect = {player->spriteFrame * 32, player->spriteLine * 32,
+                          32 * player->direction, 32};
+  DrawTexturePro(playerTexture, spriteRect, player->rect, origin, 0.0f, WHITE);
 }
