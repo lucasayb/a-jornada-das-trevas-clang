@@ -50,9 +50,16 @@ void handleAttack(Player *player) {
 void updatePlayer(Player *player, Enemy *enemy, float dt) {
   switch (player->state) {
   case STATE_IDLE:
+    player->stateTimer += dt;
+    // player->spriteLine = 1;
     if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_LEFT)) {
       player->state = STATE_WALKING;
     }
+    // Moviment for idle
+    // if (player->stateTimer > 0.2f) {
+    //   player->stateTimer = 0;
+    //   player->spriteFrame = player->spriteFrame == 1 ? 0 : 1;
+    // }
     handleJump(player);
     handleAttack(player);
     break;
