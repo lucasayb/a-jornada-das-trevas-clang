@@ -14,28 +14,24 @@ int main() {
   InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "A Jaqueta das Trevas");
   SetTargetFPS(FPS);
 
+  bool texturesLoaded = false;
   GameScreen gameState = SCREEN_TITLE;
   Player player;
   Enemy enemy;
 
-  while (!WindowShouldClose()) {
+  while (!WindowShouldClose() && gameState != EXITING) {
     float dt = GetFrameTime();
-    switch (gameState) {
-    case SCREEN_TITLE:
+    if (gameState == SCREEN_TITLE) {
       if (IsKeyPressed(KEY_ENTER)) {
-        loadGameplayTextures();
+        if (!texturesLoaded) {
+          loadGameplayTextures();
+          texturesLoaded = true;
+        }
         gameState = SCREEN_GAMEPLAY;
         player = createPlayer(100, GROUND_Y - 50);
         enemy = createEnemy(400, GROUND_Y - 42 * 2);
       }
-      break;
-    case SCREEN_PAUSED:
-    case SCREEN_GAMEPLAY:
-      break;
-    case SCREEN_GAMEOVER:
-      break;
     }
-
     BeginDrawing();
     ClearBackground(LIGHTGRAY);
     switch (gameState) {
@@ -51,6 +47,8 @@ int main() {
       allowMenuToBePaused(&gameState);
       break;
     case SCREEN_GAMEOVER:
+      break;
+    case EXITING:
       break;
     }
     EndDrawing();
