@@ -7,8 +7,8 @@ Enemy createEnemy(float x, float y) {
       .health = 100.0f,
       .isAlive = true,
       .collided = false,
-      .rect = (Rectangle){x, y, (42 * 2), 42 * 2},
-      .healthbarRect = (Rectangle){(x + 21), y - 15, 55, 10},
+      .rect = (Rectangle){x, y, (52 * 2.5), (52 * 2.5)},
+      .healthbarRect = (Rectangle){(x + 35), y, 55, 10},
   };
   return enemy;
 }
@@ -23,7 +23,7 @@ void drawEnemy(Enemy *enemy) {
     // ENEMY
     // DrawRectangleRec(enemy->rect, ORANGE);
     Vector2 origin = {0, 0};
-    Rectangle source = {0, 0, -42, 42};
+    Rectangle source = {0, 0, 52, 52};
     DrawTexturePro(enemyTexture, source, enemy->rect, origin, 0, WHITE);
     drawEnemyHealthBar(enemy);
   }

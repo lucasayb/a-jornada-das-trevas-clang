@@ -5,7 +5,7 @@ Texture2D enemyTexture;
 
 void loadGameplayTextures() {
   playerTexture = LoadTexture("./textures/jacket.png");
-  enemyTexture = LoadTexture("./textures/littlebaldy.png");
+  enemyTexture = LoadTexture("./textures/enemy.png");
 }
 
 void unloadGameplayTextures() {
