@@ -1,5 +1,5 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
-typedef enum { SCREEN_TITLE, SCREEN_GAMEPLAY, SCREEN_GAMEOVER } GameScreen;
+typedef enum { SCREEN_TITLE, SCREEN_GAMEPLAY, SCREEN_PAUSED, SCREEN_GAMEOVER } GameScreen;
 
 #endif

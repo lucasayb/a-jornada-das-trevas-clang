@@ -1,7 +1,15 @@
 #include "config.h"
 #include "raygui.h"
+#include "gameState.h"
 #include <raylib.h>
-void drawStartMenu() {
+
+void allowMenuToBePaused(GameScreen *gameState) {
+  if (IsKeyPressed(KEY_B)) {
+    *gameState = SCREEN_PAUSED;
+  }
+}
+
+void drawStartMenu(GameScreen *gameState) {
   bool WindowBox000Active = true;
   bool Button001Pressed = false;
   bool Button002Pressed = false;
@@ -26,4 +34,7 @@ void drawStartMenu() {
   Button001Pressed = GuiButton(continueButton, "Continue");
   Button002Pressed = GuiButton(restartButton, "Restart");
   Button003Pressed = GuiButton(exitButton, "Exit");
+  if (Button003Pressed) {
+    *gameState = SCREEN_TITLE;
+  }
 }

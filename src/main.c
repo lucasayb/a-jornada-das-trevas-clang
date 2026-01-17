@@ -4,6 +4,7 @@
 #include "gameState.h"
 #include "physics.h"
 #include "player.h"
+#include "startMenu.h"
 #include "textureLoader.h"
 #include "titleScreen.h"
 #include <raylib.h>
@@ -14,19 +15,22 @@ int main() {
   InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "A Jaqueta das Trevas");
   SetTargetFPS(FPS);
 
-  GameScreen currentScreen = SCREEN_TITLE;
-  Player player = createPlayer(100, GROUND_Y - 50);
-  Enemy enemy = createEnemy(400, GROUND_Y - 42 * 2);
+  GameScreen gameState = SCREEN_TITLE;
+  Player player;
+  Enemy enemy;
 
   while (!WindowShouldClose()) {
     float dt = GetFrameTime();
-    switch (currentScreen) {
+    switch (gameState) {
     case SCREEN_TITLE:
       if (IsKeyPressed(KEY_ENTER)) {
         loadGameplayTextures();
-        currentScreen = SCREEN_GAMEPLAY;
+        gameState = SCREEN_GAMEPLAY;
+        player = createPlayer(100, GROUND_Y - 50);
+        enemy = createEnemy(400, GROUND_Y - 42 * 2);
       }
       break;
+    case SCREEN_PAUSED:
     case SCREEN_GAMEPLAY:
       break;
     case SCREEN_GAMEOVER:
@@ -35,12 +39,16 @@ int main() {
 
     BeginDrawing();
     ClearBackground(LIGHTGRAY);
-    switch (currentScreen) {
+    switch (gameState) {
     case SCREEN_TITLE:
       drawTitleScreen();
       break;
+    case SCREEN_PAUSED:
+      drawStartMenu(&gameState);
+      break;
     case SCREEN_GAMEPLAY:
-      createGameplay(&player, &enemy, dt);
+      createGameplay(&player, &enemy, dt, &gameState);
+      allowMenuToBePaused(&gameState);
       break;
     case SCREEN_GAMEOVER:
       break;
