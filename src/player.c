@@ -1,4 +1,5 @@
 #include "player.h"
+#include "enemy.h"
 #include "textureLoader.h"
 #include <raylib.h>
 #include <stdio.h>
@@ -13,7 +14,7 @@ Player createPlayer(float x, float y) {
                    .spriteFrame = 0,
                    .direction = 1,
                    .jumpSpeed = 250.0f,
-                   .state = STATE_IDLE,
+                   .state = PLAYER_IDLE,
                    .stateTimer = 0.0f,
                    .speed = 200.0f};
   return player;
@@ -21,7 +22,7 @@ Player createPlayer(float x, float y) {
 
 void handleJump(Player *player) {
   if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_SPACE)) {
-    player->state = STATE_JUMP_PREPARE;
+    player->state = PLAYER_JUMP_PREPARE;
     player->stateTimer = 0;
     player->spriteLine = 5;
   }
@@ -42,17 +43,17 @@ void handleWalk(Player *player, float dt) {
 void handleAttack(Player *player) {
   if (IsKeyDown(KEY_F)) {
     player->spriteLine = 8;
-    player->state = STATE_ATTACK_PREPARE;
+    player->state = PLAYER_ATTACK_PREPARE;
   }
 }
 
 void updatePlayer(Player *player, Enemy *enemy, float dt) {
   switch (player->state) {
-  case STATE_IDLE:
+  case PLAYER_IDLE:
     player->stateTimer += dt;
     // player->spriteLine = 1;
     if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_LEFT)) {
-      player->state = STATE_WALKING;
+      player->state = PLAYER_WALKING;
     }
     // Moviment for idle
     // if (player->stateTimer > 0.2f) {
@@ -62,7 +63,7 @@ void updatePlayer(Player *player, Enemy *enemy, float dt) {
     handleJump(player);
     handleAttack(player);
     break;
-  case STATE_WALKING:
+  case PLAYER_WALKING:
     player->spriteLine = 3;
     player->stateTimer += dt;
 
@@ -75,7 +76,7 @@ void updatePlayer(Player *player, Enemy *enemy, float dt) {
     }
 
     if (!IsKeyDown(KEY_LEFT) && !IsKeyDown(KEY_RIGHT)) {
-      player->state = STATE_IDLE;
+      player->state = PLAYER_IDLE;
       player->spriteFrame = 0;
       player->spriteLine = 0;
     }
@@ -84,14 +85,14 @@ void updatePlayer(Player *player, Enemy *enemy, float dt) {
     handleAttack(player);
     handleWalk(player, dt);
     break;
-  case STATE_ATTACK_PREPARE:
+  case PLAYER_ATTACK_PREPARE:
     player->stateTimer += dt;
     player->spriteFrame = 1;
     if (player->stateTimer >= 0.1f) {
-      player->state = STATE_ATTACKING;
+      player->state = PLAYER_ATTACKING;
     }
     break;
-  case STATE_ATTACKING:
+  case PLAYER_ATTACKING:
     player->stateTimer += dt;
     // Check collision between sword and enemy
     if (player->stateTimer >= 0.1f) {
@@ -100,32 +101,32 @@ void updatePlayer(Player *player, Enemy *enemy, float dt) {
     }
 
     if (player->spriteFrame == 3) {
+
       if (CheckCollisionRecs(enemy->rect, player->rect) &&
-          player->state == STATE_ATTACKING) {
-        enemy->health -= 2;
-        enemy->collided = true;
+          player->state == PLAYER_ATTACKING) {
+        enemy->state = ENEMY_ATTACKED;
       }
     }
 
     if (player->spriteFrame == 7) {
       player->spriteFrame = 0;
       player->spriteLine = 0;
-      player->state = STATE_IDLE;
+      player->state = PLAYER_IDLE;
     }
 
     break;
-  case STATE_ATTACK_STOP:
+  case PLAYER_ATTACK_STOP:
     break;
-  case STATE_JUMP_PREPARE:
+  case PLAYER_JUMP_PREPARE:
     player->stateTimer += dt;
     player->spriteFrame = 1;
     if (player->stateTimer >= 0.1f) {
       player->vy = -player->jumpSpeed;
       player->onGround = false;
-      player->state = STATE_JUMPING;
+      player->state = PLAYER_JUMPING;
     }
     break;
-  case STATE_JUMPING:
+  case PLAYER_JUMPING:
     player->spriteLine = 5;
     if (player->vy < -100) {
       player->spriteFrame = 2;
@@ -138,15 +139,15 @@ void updatePlayer(Player *player, Enemy *enemy, float dt) {
     }
 
     if (player->onGround) {
-      player->state = STATE_JUMP_LAND;
+      player->state = PLAYER_JUMP_LAND;
       player->stateTimer = 0;
       player->spriteFrame = 6;
     }
     handleWalk(player, dt);
     break;
-  case STATE_JUMP_LAND:
+  case PLAYER_JUMP_LAND:
     player->spriteFrame = 7;
-    player->state = STATE_IDLE;
+    player->state = PLAYER_IDLE;
     break;
   }
 }
@@ -154,9 +155,7 @@ void updatePlayer(Player *player, Enemy *enemy, float dt) {
 void drawPlayer(Player *player) {
   // PLAYER
   Vector2 origin = {0, 0};
-  Rectangle spriteRect = {
-    player->spriteFrame * 32,
-    player->spriteLine * 32,
+  Rectangle spriteRect = {player->spriteFrame * 32, player->spriteLine * 32,
                           32 * player->direction, 32};
   DrawTexturePro(playerTexture, spriteRect, player->rect, origin, 0.0f, WHITE);
 }

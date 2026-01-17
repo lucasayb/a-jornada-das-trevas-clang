@@ -4,7 +4,6 @@
 #include <raylib.h>
 
 void applyPhysics(Player *player, Enemy *enemy, float dt) {
-  enemy->collided = false;
   // O player estava parado (vy = 0)
   // Pressiona espaço (vy = -650) <- Velocidade para cima
   // No Raylib (e maioria dos sistemas gráficos), Y cresce pra baixo
@@ -20,12 +19,5 @@ void applyPhysics(Player *player, Enemy *enemy, float dt) {
     player->rect.y = floorY;
     player->vy = 0.0f;
     player->onGround = true;
-  }
-
-  if (enemy->health <= 0) return;
-
-  // Check collision between player and enemy
-  if (CheckCollisionRecs(enemy->rect, player->rect)) {
-    enemy->collided = true;
   }
 }

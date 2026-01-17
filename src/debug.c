@@ -22,7 +22,7 @@ void initDebug(Player *player, Enemy *enemy) {
            player->vy,
            player->onGround,
            player->state,
-           enemy->collided,
+           enemy->state,
            player->direction,
            enemy->health
   );

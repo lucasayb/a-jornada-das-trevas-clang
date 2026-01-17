@@ -8,6 +8,7 @@ void updateAndDrawGameplay(Player *player, Enemy *enemy, float dt, GameScreen *g
   if (*gameState != SCREEN_PAUSED) {
     applyPhysics(player, enemy, dt);
     updatePlayer(player, enemy, dt);
+    updateEnemy(enemy, dt);
   }
   drawGround();
   drawPlayer(player);

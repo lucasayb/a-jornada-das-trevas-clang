@@ -5,9 +5,9 @@
 Enemy createEnemy(float x, float y) {
   Enemy enemy = {
       .health = 100.0f,
-      .isAlive = true,
-      .collided = false,
-      .rect = (Rectangle){x, y, (52 * 2.5), (52 * 2.5)},
+      .state = ENEMY_IDLE,
+      .stateTimer = 0.0f,
+      .rect = (Rectangle){x, y, (56 * 2.5), (56 * 2.5)},
       .direction = 1,
       .spriteLine = 0,
       .spriteFrame = 0,
@@ -24,12 +24,35 @@ void drawEnemyHealthBar(Enemy *enemy) {
   DrawRectangle(healthbarX, healthbarY, healthbar, 8, RED);
 }
 
-void updateEnemy() {}
+void updateEnemy(Enemy *enemy, float dt) {
+  switch (enemy->state) {
+  case ENEMY_IDLE:
+    enemy->spriteLine = 0;
+    enemy->spriteFrame = 0;
+    break;
+
+  case ENEMY_ATTACKED:
+    enemy->spriteLine = 0;
+    enemy->stateTimer += dt;
+    if (enemy->stateTimer > 0.08f) {
+      enemy->spriteFrame++;
+      if (enemy->spriteFrame > 4) {
+        enemy->health -= 2;
+        enemy->state = ENEMY_IDLE;
+      }
+      enemy->stateTimer = 0;
+    }
+    break;
+
+  case ENEMY_COLLIDED:
+    break;
+  }
+}
 
 void drawEnemy(Enemy *enemy) {
   if (enemy->health > 0) {
-    int sourceWidth = 52;
-    int sourceHeight = 52;
+    int sourceWidth = 56;
+    int sourceHeight = 56;
     Vector2 origin = {0, 0};
     Rectangle source = {sourceWidth * enemy->spriteFrame,
                         sourceHeight * enemy->spriteLine,
