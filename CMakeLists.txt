@@ -15,6 +15,8 @@ add_executable(a_jaqueta_das_trevas
   src/player.c
   src/textureLoader.c
   src/titleScreen.c
+  src/startMenu.c
+  src/raygui.c
 )
 
 target_link_libraries(a_jaqueta_das_trevas raylib)

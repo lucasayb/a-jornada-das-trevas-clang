@@ -1,5 +1,4 @@
 #include "config.h"
-
 #include "enemy.h"
 #include "game.h"
 #include "gameState.h"
