@@ -4,7 +4,7 @@
 #include "gameState.h"
 
 
-void createGameplay(Player *player, Enemy *enemy, float dt, GameScreen *gameState) {
+void updateAndDrawGameplay(Player *player, Enemy *enemy, float dt, GameScreen *gameState) {
   if (*gameState != SCREEN_PAUSED) {
     applyPhysics(player, enemy, dt);
     updatePlayer(player, enemy, dt);

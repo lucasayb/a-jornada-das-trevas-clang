@@ -1,7 +1,6 @@
 #include "player.h"
 #include "textureLoader.h"
 #include <raylib.h>
-#include <stdatomic.h>
 #include <stdio.h>
 
 Player createPlayer(float x, float y) {

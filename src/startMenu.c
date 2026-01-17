@@ -29,8 +29,7 @@ void drawStartMenu(GameScreen *gameState) {
   Rectangle exitButton = {startMenuX + 24,
                           startMenuY + buttonHeight + buttonSpacing * 2, 312,
                           buttonHeight};
-  WindowBox000Active = !GuiWindowBox(
-      (Rectangle){startMenuX, startMenuY, 360, 264}, "Start menu");
+  WindowBox000Active = !GuiWindowBox((Rectangle){startMenuX, startMenuY, 360, 264}, "Start menu");
   Button001Pressed = GuiButton(continueButton, "Continue");
   Button002Pressed = GuiButton(restartButton, "Restart");
   Button003Pressed = GuiButton(exitButton, "Exit");

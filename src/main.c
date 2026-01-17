@@ -8,7 +8,6 @@
 #include "textureLoader.h"
 #include "titleScreen.h"
 #include <raylib.h>
-#include <stdatomic.h>
 #include <stdio.h>
 
 int main() {
@@ -44,10 +43,11 @@ int main() {
       drawTitleScreen();
       break;
     case SCREEN_PAUSED:
+      updateAndDrawGameplay(&player, &enemy, dt, &gameState);
       drawStartMenu(&gameState);
       break;
     case SCREEN_GAMEPLAY:
-      createGameplay(&player, &enemy, dt, &gameState);
+      updateAndDrawGameplay(&player, &enemy, dt, &gameState);
       allowMenuToBePaused(&gameState);
       break;
     case SCREEN_GAMEOVER:
