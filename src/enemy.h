@@ -7,6 +7,9 @@ typedef struct {
   Rectangle rect;
   Rectangle healthbarRect;
   float health;
+  int direction;
+  int spriteLine;
+  int spriteFrame;
   bool isAlive;
   bool collided;
 } Enemy;
