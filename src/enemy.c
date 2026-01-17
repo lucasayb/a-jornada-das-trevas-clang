@@ -14,8 +14,11 @@ Enemy createEnemy(float x, float y) {
 }
 
 void drawEnemyHealthBar(Enemy *enemy) {
+  int healthbar = 53 * enemy->health / 100;
   DrawRectangle(enemy->healthbarRect.x, enemy->healthbarRect.y, 55, 10, BLACK);
-  DrawRectangle(enemy->healthbarRect.x + 1, enemy->healthbarRect.y + 1, 53 * enemy->health / 100, 8, RED);
+  int healthbarX = enemy->healthbarRect.x + 1;
+  int healthbarY = enemy->healthbarRect.y + 1;
+  DrawRectangle(healthbarX, healthbarY, healthbar, 8, RED);
 }
 
 void drawEnemy(Enemy *enemy) {
