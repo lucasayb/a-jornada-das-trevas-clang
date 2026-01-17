@@ -28,8 +28,12 @@ void updateEnemy() {}
 
 void drawEnemy(Enemy *enemy) {
   if (enemy->health > 0) {
+    int sourceWidth = 52;
+    int sourceHeight = 52;
     Vector2 origin = {0, 0};
-    Rectangle source = {0, 0, 52 * enemy->direction, 52};
+    Rectangle source = {sourceWidth * enemy->spriteFrame,
+                        sourceHeight * enemy->spriteLine,
+                        sourceWidth * enemy->direction, sourceHeight};
     DrawTexturePro(enemyTexture, source, enemy->rect, origin, 0, WHITE);
     drawEnemyHealthBar(enemy);
   }
