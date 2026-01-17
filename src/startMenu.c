@@ -7,14 +7,23 @@ void drawStartMenu() {
   bool Button002Pressed = false;
   bool Button003Pressed = false;
   int windowWidth = 360;
+  int windowHeight = 264;
+  int buttonHeight = 48;
+  int buttonSpacing = 72;
   float startMenuX = (float)(SCREEN_WIDTH - windowWidth) / 2;
+  float startMenuY = (float)(SCREEN_HEIGHT - windowHeight) / 2;
 
-  WindowBox000Active =
-      !GuiWindowBox((Rectangle){startMenuX, 264, 360, 264}, "Start menu");
-  Button001Pressed =
-      GuiButton((Rectangle){startMenuX + 24, 312, 312, 48}, "Continue");
-  Button002Pressed =
-      GuiButton((Rectangle){startMenuX + 24, 384, 312, 48}, "Restart");
-  Button003Pressed =
-      GuiButton((Rectangle){startMenuX + 24, 456, 312, 48}, "Exit");
+  Rectangle continueButton = {startMenuX + 24, startMenuY + buttonHeight * 1,
+                              312, buttonHeight};
+  Rectangle restartButton = {startMenuX + 24,
+                             startMenuY + buttonHeight + buttonSpacing, 312,
+                             buttonHeight};
+  Rectangle exitButton = {startMenuX + 24,
+                          startMenuY + buttonHeight + buttonSpacing * 2, 312,
+                          buttonHeight};
+  WindowBox000Active = !GuiWindowBox(
+      (Rectangle){startMenuX, startMenuY, 360, 264}, "Start menu");
+  Button001Pressed = GuiButton(continueButton, "Continue");
+  Button002Pressed = GuiButton(restartButton, "Restart");
+  Button003Pressed = GuiButton(exitButton, "Exit");
 }
