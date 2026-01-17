@@ -155,7 +155,9 @@ void updatePlayer(Player *player, Enemy *enemy, float dt) {
 void drawPlayer(Player *player) {
   // PLAYER
   Vector2 origin = {0, 0};
-  Rectangle spriteRect = {player->spriteFrame * 32, player->spriteLine * 32,
+  Rectangle spriteRect = {
+    player->spriteFrame * 32,
+    player->spriteLine * 32,
                           32 * player->direction, 32};
   DrawTexturePro(playerTexture, spriteRect, player->rect, origin, 0.0f, WHITE);
 }
