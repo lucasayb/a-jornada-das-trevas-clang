@@ -20,8 +20,6 @@ void drawEnemyHealthBar(Enemy *enemy) {
 
 void drawEnemy(Enemy *enemy) {
   if (enemy->health > 0) {
-    // ENEMY
-    // DrawRectangleRec(enemy->rect, ORANGE);
     Vector2 origin = {0, 0};
     Rectangle source = {0, 0, 52, 52};
     DrawTexturePro(enemyTexture, source, enemy->rect, origin, 0, WHITE);
