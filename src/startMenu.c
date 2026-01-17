@@ -1,6 +1,6 @@
 #include "config.h"
-#include "raygui.h"
 #include "gameState.h"
+#include "raygui.h"
 #include <raylib.h>
 
 void allowMenuToBePaused(GameScreen *gameState) {
@@ -10,10 +10,6 @@ void allowMenuToBePaused(GameScreen *gameState) {
 }
 
 void drawStartMenu(GameScreen *gameState) {
-  bool WindowBox000Active = true;
-  bool continueButtonPressed = false;
-  bool titleScreenButtonPressed = false;
-  bool exitButtonPressed = false;
   int windowWidth = 360;
   int windowHeight = 264;
   int buttonHeight = 48;
@@ -21,25 +17,22 @@ void drawStartMenu(GameScreen *gameState) {
   float startMenuX = (float)(SCREEN_WIDTH - windowWidth) / 2;
   float startMenuY = (float)(SCREEN_HEIGHT - windowHeight) / 2;
 
-  Rectangle continueButtonRect = {startMenuX + 24, startMenuY + buttonHeight * 1,
-                              312, buttonHeight};
+  Rectangle continueButtonRect = {
+      startMenuX + 24, startMenuY + buttonHeight * 1, 312, buttonHeight};
   Rectangle titleScreenButtonRect = {startMenuX + 24,
-                             startMenuY + buttonHeight + buttonSpacing, 312,
-                             buttonHeight};
+                                     startMenuY + buttonHeight + buttonSpacing,
+                                     312, buttonHeight};
   Rectangle exitButtonRect = {startMenuX + 24,
-                          startMenuY + buttonHeight + buttonSpacing * 2, 312,
-                          buttonHeight};
+                              startMenuY + buttonHeight + buttonSpacing * 2,
+                              312, buttonHeight};
   GuiWindowBox((Rectangle){startMenuX, startMenuY, 360, 264}, "Start menu");
-  continueButtonPressed = GuiButton(continueButtonRect, "Continue");
-  if (continueButtonPressed) {
+  if (GuiButton(continueButtonRect, "Continue")) {
     *gameState = SCREEN_GAMEPLAY;
   }
-  titleScreenButtonPressed = GuiButton(titleScreenButtonRect, "Back to title screen");
-  if (titleScreenButtonPressed) {
+  if (GuiButton(titleScreenButtonRect, "Back to title screen")) {
     *gameState = SCREEN_TITLE;
   }
-  exitButtonPressed = GuiButton(exitButtonRect, "Exit");
-  if (exitButtonPressed) {
+  if (GuiButton(exitButtonRect, "Exit")) {
     *gameState = EXITING;
   }
 }
