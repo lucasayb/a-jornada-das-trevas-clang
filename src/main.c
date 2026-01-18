@@ -18,7 +18,7 @@ int main() {
   GameScreen gameState = SCREEN_TITLE;
   Player player;
   Enemy enemy;
-
+  SetExitKey(KEY_NULL);
   while (!WindowShouldClose() && gameState != EXITING) {
     float dt = GetFrameTime();
     if (gameState == SCREEN_TITLE) {

@@ -4,7 +4,7 @@
 #include <raylib.h>
 
 void allowMenuToBePaused(GameScreen *gameState) {
-  if (IsKeyPressed(KEY_B)) {
+  if (IsKeyPressed(KEY_ESCAPE)) {
     *gameState = SCREEN_PAUSED;
   }
 }
