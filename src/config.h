@@ -5,4 +5,6 @@
 #define SCREEN_HEIGHT 720
 #define FPS 60
 
+#define MAX_ENEMIES 20
+
 #endif

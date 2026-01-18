@@ -5,10 +5,13 @@
 #include "playerStats.h"
 
 
-void updateAndDrawGameplay(Player *player, Enemy *enemy, float dt, GameScreen *gameState) {
+void updateAndDrawGameplay(Player *player, Enemy *enemies, float dt, GameScreen *gameState) {
   if (*gameState != SCREEN_PAUSED) {
-    applyPhysics(player, enemy, dt);
+    applyPhysics(player, dt);
     updatePlayer(player, dt);
+    for (int i = 0; i < MAX_ENEMIES; i++) {
+
+    }
     updateEnemy(enemy, dt);
     Combat combat = {
       .player = player,

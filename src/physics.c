@@ -1,9 +1,8 @@
 #include "physics.h"
 #include "player.h"
-#include "enemy.h"
 #include <raylib.h>
 
-void applyPhysics(Player *player, Enemy *enemy, float dt) {
+void applyPhysics(Player *player, float dt) {
   // O player estava parado (vy = 0)
   // Pressiona espaço (vy = -650) <- Velocidade para cima
   // No Raylib (e maioria dos sistemas gráficos), Y cresce pra baixo
