@@ -34,7 +34,11 @@ int main() {
       }
     }
     BeginDrawing();
-    ClearBackground(LIGHTGRAY);
+    ClearBackground(WHITE);
+    Rectangle backgroundSource = {0, 0, 240, 160};
+    Rectangle backgroundDest = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
+    DrawTexturePro(backgroundTexture, backgroundSource, backgroundDest,
+                   (Vector2){0, 0}, 0, WHITE);
     switch (gameState) {
     case SCREEN_TITLE:
       drawTitleScreen();
