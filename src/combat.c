@@ -22,14 +22,27 @@ void updateCombat(Combat *combat, float dt) {
         if (CheckCollisionRecs(combat->enemy->rect, combat->player->rect)) {
           combat->enemy->state = ENEMY_ATTACKED;
           combat->enemy->health -= 20;
-          combat->enemy->invencibleTimer = 1.0f;
+          combat->enemy->invencibleTimer = 0.5f;
         }
       }
     }
   }
 
   if (combat->player->invencibleTimer <= 0) {
-    if (CheckCollisionRecs(combat->enemy->rect, combat->player->rect)) {
+    Rectangle collisionRect;
+    float collisionWidth = 35;
+
+    if (combat->enemy->direction == 1) {
+      collisionRect.x = combat->enemy->rect.x - collisionWidth + 50;
+    } else {
+      collisionRect.x = combat->enemy->rect.x + combat->enemy->rect.width - 50;
+    }
+
+    collisionRect.y = combat->enemy->rect.y;
+    collisionRect.width = collisionWidth;
+    collisionRect.height = combat->enemy->rect.height;
+
+    if (CheckCollisionRecs(collisionRect, combat->player->rect)) {
       if (combat->enemy->spriteFrame == 5) {
         combat->enemy->state = ENEMY_ATTACKING;
         combat->player->state = PLAYER_ATTACKED;
