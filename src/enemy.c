@@ -1,6 +1,7 @@
 #include "enemy.h"
 #include "config.h"
 #include "textureLoader.h"
+#include <stdio.h>
 #include <raylib.h>
 
 int healthbarX = 35;
@@ -71,7 +72,7 @@ void moveEnemy(Enemy *enemy, int pos) {
 }
 
 void enableMovement(Enemy *enemy) {
-  if (enemy->rect.x >= SCREEN_WIDTH) {
+  if (enemy->rect.x + enemy->rect.width >= SCREEN_WIDTH) {
     enemy->direction = 1;
   } else if ((enemy->rect.x <= 0)) {
     enemy->direction = -1;
