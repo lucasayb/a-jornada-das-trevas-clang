@@ -1,4 +1,3 @@
-#include "debug.h"
 #include "ground.h"
 #include "physics.h"
 #include "gameState.h"
@@ -15,5 +14,4 @@ void updateAndDrawGameplay(Player *player, Enemy *enemy, float dt, GameScreen *g
   drawPlayerStats(player);
   drawPlayer(player);
   drawEnemy(enemy);
-  initDebug(player, enemy);
 }

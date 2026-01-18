@@ -6,7 +6,6 @@ set(CMAKE_C_STANDARD 99)
 find_package(raylib 4.0 REQUIRED)
 
 add_executable(a_jaqueta_das_trevas
-  src/debug.c
   src/ground.c
   src/enemy.c
   src/game.c
@@ -18,6 +17,7 @@ add_executable(a_jaqueta_das_trevas
   src/startMenu.c
   src/raygui.c
   src/playerStats.c
+  src/infobar.c
 )
 
 target_link_libraries(a_jaqueta_das_trevas raylib)

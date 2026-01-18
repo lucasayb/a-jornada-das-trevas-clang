@@ -2,6 +2,7 @@
 #include "enemy.h"
 #include "game.h"
 #include "gameState.h"
+#include "infobar.h"
 #include "physics.h"
 #include "player.h"
 #include "startMenu.h"
@@ -45,12 +46,14 @@ int main() {
     case SCREEN_GAMEPLAY:
       updateAndDrawGameplay(&player, &enemy, dt, &gameState);
       allowMenuToBePaused(&gameState);
+      infobar();
       break;
     case SCREEN_GAMEOVER:
       break;
     case EXITING:
       break;
     }
+
     EndDrawing();
   }
 
