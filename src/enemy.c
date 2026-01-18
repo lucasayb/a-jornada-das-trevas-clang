@@ -22,11 +22,10 @@ Enemy createEnemy(float x, float y, int direction) {
 
 
 void drawEnemyHealthBar(Enemy *enemy) {
-  int healthbar = 53 * enemy->health / 100;
-  DrawRectangle(enemy->healthbarRect.x, enemy->healthbarRect.y, 55, 10, BLACK);
-  int healthbarX = enemy->healthbarRect.x + 1;
-  int healthbarY = enemy->healthbarRect.y + 1;
-  DrawRectangle(healthbarX, healthbarY, healthbar, 8, RED);
+  int healthbar = 55 * enemy->health / 100;
+  int healbarSizeHeight = 10;
+  DrawRectangle(enemy->healthbarRect.x, enemy->healthbarRect.y, healthbar, healbarSizeHeight, RED);
+  DrawRectangleLines(enemy->healthbarRect.x, enemy->healthbarRect.y, 55, healbarSizeHeight, BLACK);
 }
 
 void updateEnemy(Enemy *enemy, float dt) {
