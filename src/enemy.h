@@ -3,7 +3,12 @@
 
 #include <raylib.h>
 
-typedef enum { ENEMY_IDLE, ENEMY_ATTACKED, ENEMY_COLLIDED } EnemyState;
+typedef enum {
+  ENEMY_IDLE,
+  ENEMY_WALKING,
+  ENEMY_ATTACKED,
+  ENEMY_COLLIDED
+} EnemyState;
 
 typedef struct {
   Rectangle rect;
@@ -16,8 +21,11 @@ typedef struct {
   int spriteFrame;
 } Enemy;
 
-Enemy createEnemy(float x, float y);
+Enemy createEnemy(float x, float y, int direction);
 void updateEnemy(Enemy *enemy, float dt);
 void drawEnemy(Enemy *enemy);
+void enableMovement(Enemy *enemy);
+void moveEnemy(Enemy *enemy, int pos);
+
 void drawEnemyHealthBar(Enemy *enemy);
 #endif

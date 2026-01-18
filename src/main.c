@@ -29,7 +29,7 @@ int main() {
         }
         gameState = SCREEN_GAMEPLAY;
         player = createPlayer(100, GROUND_Y - 50);
-        enemy = createEnemy(400, GROUND_Y - 52 * 2.5);
+        enemy = createEnemy(400, GROUND_Y - 52 * 2.5, 1);
       }
     }
     BeginDrawing();
