@@ -2,6 +2,7 @@
 #include "ground.h"
 #include "physics.h"
 #include "gameState.h"
+#include "playerStats.h"
 
 
 void updateAndDrawGameplay(Player *player, Enemy *enemy, float dt, GameScreen *gameState) {
@@ -11,6 +12,7 @@ void updateAndDrawGameplay(Player *player, Enemy *enemy, float dt, GameScreen *g
     updateEnemy(enemy, dt);
   }
   drawGround();
+  drawPlayerStats(player);
   drawPlayer(player);
   drawEnemy(enemy);
   initDebug(player, enemy);

@@ -55,6 +55,10 @@ void updatePlayer(Player *player, Enemy *enemy, float dt) {
     if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_LEFT)) {
       player->state = PLAYER_WALKING;
     }
+
+    if (IsKeyPressed(KEY_U)) {
+      player->health -= 20;
+    }
     // Moviment for idle
     // if (player->stateTimer > 0.2f) {
     //   player->stateTimer = 0;
