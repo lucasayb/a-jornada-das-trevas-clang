@@ -1,5 +1,4 @@
 #include "player.h"
-#include "enemy.h"
 #include "textureLoader.h"
 #include <raylib.h>
 #include <stdio.h>
@@ -14,6 +13,7 @@ Player createPlayer(float x, float y) {
                    .spriteFrame = 0,
                    .direction = 1,
                    .jumpSpeed = 250.0f,
+                   .invencibleTimer = 0,
                    .state = PLAYER_IDLE,
                    .stateTimer = 0.0f,
                    .speed = 200.0f};
@@ -47,23 +47,14 @@ void handleAttack(Player *player) {
   }
 }
 
-void updatePlayer(Player *player, Enemy *enemy, float dt) {
+void updatePlayer(Player *player, float dt) {
   switch (player->state) {
   case PLAYER_IDLE:
     player->stateTimer += dt;
-    // player->spriteLine = 1;
+    player->spriteFrame = 0;
     if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_LEFT)) {
       player->state = PLAYER_WALKING;
     }
-
-    if (IsKeyPressed(KEY_U)) {
-      player->health -= 20;
-    }
-    // Moviment for idle
-    // if (player->stateTimer > 0.2f) {
-    //   player->stateTimer = 0;
-    //   player->spriteFrame = player->spriteFrame == 1 ? 0 : 1;
-    // }
     handleJump(player);
     handleAttack(player);
     break;
@@ -89,6 +80,21 @@ void updatePlayer(Player *player, Enemy *enemy, float dt) {
     handleAttack(player);
     handleWalk(player, dt);
     break;
+  case PLAYER_ATTACKED:
+    player->stateTimer += dt;
+    player->spriteLine = 1;
+    if (player->stateTimer > 0.1f) {
+      player->spriteFrame = 1;
+      player->stateTimer = 0;
+      if (player->spriteFrame == 1) {
+        player->state = PLAYER_IDLE;
+        player->spriteFrame = 0;
+      }
+    }
+    handleJump(player);
+    handleAttack(player);
+    handleWalk(player, dt);
+    break;
   case PLAYER_ATTACK_PREPARE:
     player->stateTimer += dt;
     player->spriteFrame = 1;
@@ -102,14 +108,6 @@ void updatePlayer(Player *player, Enemy *enemy, float dt) {
     if (player->stateTimer >= 0.1f) {
       player->spriteFrame++;
       player->stateTimer = 0;
-    }
-
-    if (player->spriteFrame == 3) {
-
-      if (CheckCollisionRecs(enemy->rect, player->rect) &&
-          player->state == PLAYER_ATTACKING) {
-        enemy->state = ENEMY_ATTACKED;
-      }
     }
 
     if (player->spriteFrame == 7) {

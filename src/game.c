@@ -1,3 +1,4 @@
+#include "combat.h"
 #include "ground.h"
 #include "physics.h"
 #include "gameState.h"
@@ -7,8 +8,14 @@
 void updateAndDrawGameplay(Player *player, Enemy *enemy, float dt, GameScreen *gameState) {
   if (*gameState != SCREEN_PAUSED) {
     applyPhysics(player, enemy, dt);
-    updatePlayer(player, enemy, dt);
+    updatePlayer(player, dt);
     updateEnemy(enemy, dt);
+    Combat combat = {
+      .player = player,
+      .enemy = enemy,
+      .stateTimer = 0
+    };
+    updateCombat(&combat, dt);
   }
   drawGround();
   drawPlayerStats(player);

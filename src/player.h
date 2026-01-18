@@ -1,7 +1,6 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "enemy.h"
 #include <raylib.h>
 
 typedef enum {
@@ -9,6 +8,7 @@ typedef enum {
   PLAYER_WALKING,
   PLAYER_ATTACK_PREPARE,
   PLAYER_ATTACKING,
+  PLAYER_ATTACKED,
   PLAYER_ATTACK_STOP,
   PLAYER_JUMP_PREPARE,
   PLAYER_JUMPING,
@@ -16,19 +16,20 @@ typedef enum {
 } PlayerState;
 
 typedef struct {
-  Rectangle rect;
-  float health;
   bool isAlive;
   bool onGround;
   float vy;
+  float health;
   float jumpSpeed;
   float speed;
+  float invencibleTimer;
+  float stateTimer;
   int direction;
   int spriteFrame;
   int spriteLine;
+  Rectangle rect;
   Rectangle spriteRect;
   PlayerState state;
-  float stateTimer;
 } Player;
 
 typedef struct {
@@ -41,9 +42,7 @@ Player createPlayer(float x, float y);
 
 Sword createSword(Player *player);
 
-void updatePlayer(Player *player, Enemy *enemy, float dt);
-
-bool checkSwordHitbox(Sword *sword, Enemy *enemy);
+void updatePlayer(Player *player, float dt);
 
 void drawPlayer(Player *player);
 

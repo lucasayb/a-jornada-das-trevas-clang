@@ -7,6 +7,7 @@ typedef enum {
   ENEMY_IDLE,
   ENEMY_WALKING,
   ENEMY_ATTACKED,
+  ENEMY_ATTACKING,
   ENEMY_COLLIDED
 } EnemyState;
 
@@ -14,11 +15,13 @@ typedef struct {
   Rectangle rect;
   Rectangle healthbarRect;
   EnemyState state;
+  float invencibleTimer;
   float stateTimer;
   float health;
   int direction;
   int spriteLine;
   int spriteFrame;
+  bool isAlive;
 } Enemy;
 
 Enemy createEnemy(float x, float y, int direction);

@@ -9,12 +9,14 @@ int healthbarX = 35;
 Enemy createEnemy(float x, float y, int direction) {
   Enemy enemy = {
       .health = 100.0f,
-      .state = ENEMY_IDLE,
+      .state = ENEMY_WALKING,
+      .invencibleTimer = 0,
       .stateTimer = 0.0f,
       .rect = (Rectangle){x, y, (56 * 2.5), (56 * 2.5)},
       .direction = direction,
       .spriteLine = 0,
       .spriteFrame = 0,
+      .isAlive = true,
       .healthbarRect = (Rectangle){(x + healthbarX), y, 55, 10},
   };
   return enemy;
@@ -30,10 +32,22 @@ void drawEnemyHealthBar(Enemy *enemy) {
 }
 
 void updateEnemy(Enemy *enemy, float dt) {
+  if (!enemy->isAlive) return;
   switch (enemy->state) {
   case ENEMY_IDLE:
     enemy->spriteLine = 0;
     enemy->spriteFrame = 0;
+    break;
+  case ENEMY_ATTACKING:
+    enemy->spriteLine = 3;
+    enemy->stateTimer += dt;
+    if (enemy->stateTimer > 0.2f) {
+      enemy->spriteFrame++;
+      enemy->stateTimer = 0;
+      if (enemy->spriteFrame > 5) {
+        enemy->state = ENEMY_WALKING;
+      }
+    }
     break;
   case ENEMY_WALKING:
     enableMovement(enemy);
@@ -47,20 +61,17 @@ void updateEnemy(Enemy *enemy, float dt) {
       enemy->stateTimer = 0;
     }
     break;
-
   case ENEMY_ATTACKED:
     enemy->spriteLine = 0;
     enemy->stateTimer += dt;
     if (enemy->stateTimer > 0.08f) {
       enemy->spriteFrame++;
       if (enemy->spriteFrame > 4) {
-        enemy->health -= 2;
         enemy->state = ENEMY_WALKING;
       }
       enemy->stateTimer = 0;
     }
     break;
-
   case ENEMY_COLLIDED:
     break;
   }
@@ -85,14 +96,13 @@ void enableMovement(Enemy *enemy) {
 }
 
 void drawEnemy(Enemy *enemy) {
-  if (enemy->health > 0) {
-    int sourceWidth = 56;
-    int sourceHeight = 56;
-    Vector2 origin = {0, 0};
-    Rectangle source = {sourceWidth * enemy->spriteFrame,
-                        sourceHeight * enemy->spriteLine,
-                        sourceWidth * enemy->direction, sourceHeight};
-    DrawTexturePro(enemyTexture, source, enemy->rect, origin, 0, WHITE);
-    drawEnemyHealthBar(enemy);
-  }
+  if (!enemy->isAlive) return;
+  int sourceWidth = 56;
+  int sourceHeight = 56;
+  Vector2 origin = {0, 0};
+  Rectangle source = {sourceWidth * enemy->spriteFrame,
+                      sourceHeight * enemy->spriteLine,
+                      sourceWidth * enemy->direction, sourceHeight};
+  DrawTexturePro(enemyTexture, source, enemy->rect, origin, 0, WHITE);
+  drawEnemyHealthBar(enemy);
 }
