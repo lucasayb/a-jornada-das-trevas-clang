@@ -12,7 +12,7 @@ Player createPlayer(float x, float y) {
                    .spriteLine = 0,
                    .spriteFrame = 0,
                    .direction = 1,
-                   .jumpSpeed = 250.0f,
+                   .jumpSpeed = 350.0f,
                    .invencibleTimer = 0,
                    .state = PLAYER_IDLE,
                    .stateTimer = 0.0f,
@@ -35,7 +35,8 @@ void handleWalk(Player *player, float dt) {
   }
 
   if (IsKeyDown(KEY_LEFT)) {
-    if (player->rect.x <= 10) return;
+    if (player->rect.x <= 10)
+      return;
     player->rect.x -= player->speed * dt;
     player->direction = -1;
   }
