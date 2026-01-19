@@ -1,5 +1,5 @@
 #include "combat.h"
-#include "ground.h"
+#include "map.h"
 #include "physics.h"
 #include "gameState.h"
 #include "playerStats.h"
@@ -17,7 +17,7 @@ void updateAndDrawGameplay(Player *player, Enemy *enemy, float dt, GameScreen *g
     };
     updateCombat(&combat, dt);
   }
-  drawGround();
+  drawMap();
   drawPlayerStats(player);
   drawPlayer(player);
   drawEnemy(enemy);
