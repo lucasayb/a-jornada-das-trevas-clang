@@ -5,6 +5,7 @@
 
 #define MAP_ROWS 11
 #define MAP_COLS 20
+#define TILE_SIZE 64
 
 typedef enum {
   EMPTY = 0,
@@ -34,6 +35,8 @@ typedef enum {
   FRT,
   FRTR
 } TileType;
+
+bool isSolid(int x, int y);
 
 typedef struct {
   int x;

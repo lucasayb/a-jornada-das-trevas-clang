@@ -1,5 +1,6 @@
 #include "enemy.h"
 #include "config.h"
+#include "map.h"
 #include "textureLoader.h"
 #include <stdio.h>
 #include <raylib.h>
@@ -83,6 +84,15 @@ void moveEnemy(Enemy *enemy, int pos) {
 }
 
 void enableMovement(Enemy *enemy) {
+  int enemyTileX = (enemy->rect.x + enemy->rect.width / 2) / TILE_SIZE;
+  int enemyTileY = (enemy->rect.y + enemy->rect.height) / TILE_SIZE;
+
+  if (!isSolid(enemyTileX + 1, enemyTileY) && enemy->direction == -1) {
+    enemy->direction = 1;
+  } else if (!isSolid(enemyTileX - 1, enemyTileY) && enemy->direction == 1) {
+    enemy->direction = -1;
+  }
+
   if (enemy->rect.x + enemy->rect.width >= SCREEN_WIDTH) {
     enemy->direction = 1;
   } else if ((enemy->rect.x <= 0)) {

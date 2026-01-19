@@ -1,5 +1,6 @@
 #include "physics.h"
 #include "player.h"
+#include "map.h"
 #include <raylib.h>
 
 void applyPhysics(Player *player, float dt) {
@@ -14,9 +15,17 @@ void applyPhysics(Player *player, float dt) {
   player->vy += GRAVITY * dt;        // Aumenta a velocidade vertical
   player->rect.y += player->vy * dt; // Aplica a velocidade na posição
   float floorY = GROUND_Y - player->rect.height;
-  if (player->rect.y > floorY) {
-    player->rect.y = floorY;
+
+  int tileX = (player->rect.x + player->rect.width / 2) / TILE_SIZE;
+  int tileY = (player->rect.y + player->rect.height) / TILE_SIZE;
+
+
+  // if (player->rect.y > floorY) {
+  if (isSolid(tileX, tileY)) {
+    player->rect.y = tileY * TILE_SIZE - player->rect.height;
     player->vy = 0.0f;
     player->onGround = true;
+  } else {
+    player->onGround = false;
   }
 }
