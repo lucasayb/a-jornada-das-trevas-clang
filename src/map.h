@@ -4,7 +4,7 @@
 #include <raylib.h>
 
 #define MAP_ROWS 11
-#define MAP_COLS 20
+#define MAP_COLS 50
 #define TILE_SIZE 64
 
 typedef enum {
