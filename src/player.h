@@ -42,7 +42,7 @@ Player createPlayer(float x, float y);
 
 Sword createSword(Player *player);
 
-void updatePlayer(Player *player, float dt);
+void updatePlayer(Player *player, float dt, Camera2D *camera);
 
 void drawPlayer(Player *player);
 

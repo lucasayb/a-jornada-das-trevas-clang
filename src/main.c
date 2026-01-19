@@ -1,3 +1,4 @@
+#include "camera.h"
 #include "config.h"
 #include "enemy.h"
 #include "game.h"
@@ -26,7 +27,8 @@ int main() {
   int enemiesCount = sizeof(enemiesParams) / sizeof(enemiesParams[0]);
 
   Enemy enemies[enemiesCount];
-
+  Camera2D camera = createCamera();
+  camera.target.y = (float)SCREEN_HEIGHT / 2;
   SetExitKey(KEY_NULL);
   while (!WindowShouldClose() && gameState != EXITING) {
     float dt = GetFrameTime();
@@ -55,11 +57,13 @@ int main() {
       drawTitleScreen();
       break;
     case SCREEN_PAUSED:
-      updateAndDrawGameplay(&player, enemies, enemiesCount, dt, &gameState);
+      updateAndDrawGameplay(&player, enemies, enemiesCount, dt, &gameState,
+                            &camera);
       drawStartMenu(&gameState);
       break;
     case SCREEN_GAMEPLAY:
-      updateAndDrawGameplay(&player, enemies, enemiesCount, dt, &gameState);
+      updateAndDrawGameplay(&player, enemies, enemiesCount, dt, &gameState,
+                            &camera);
       allowMenuToBePaused(&gameState);
       infobar();
       break;
@@ -68,7 +72,6 @@ int main() {
     case EXITING:
       break;
     }
-
     EndDrawing();
   }
 

@@ -47,7 +47,14 @@ void handleAttack(Player *player) {
   }
 }
 
-void updatePlayer(Player *player, float dt) {
+void updateCamera(Camera2D *camera, Player *player) {
+  if (player->rect.x > camera->target.x + 100) {
+    camera->target.x = player->rect.x - 200;
+    // camera->target.x = (Vector2){ player->rect.x, player->rect.y };
+  }
+}
+
+void updatePlayer(Player *player, float dt, Camera2D *camera) {
   switch (player->state) {
   case PLAYER_IDLE:
     player->stateTimer += dt;
@@ -57,6 +64,7 @@ void updatePlayer(Player *player, float dt) {
     }
     handleJump(player);
     handleAttack(player);
+    updateCamera(camera, player);
     break;
   case PLAYER_WALKING:
     player->spriteLine = 3;
@@ -79,6 +87,7 @@ void updatePlayer(Player *player, float dt) {
     handleJump(player);
     handleAttack(player);
     handleWalk(player, dt);
+    updateCamera(camera, player);
     break;
   case PLAYER_ATTACKED:
     player->stateTimer += dt;
@@ -94,6 +103,7 @@ void updatePlayer(Player *player, float dt) {
     handleJump(player);
     handleAttack(player);
     handleWalk(player, dt);
+    updateCamera(camera, player);
     break;
   case PLAYER_ATTACK_PREPARE:
     player->stateTimer += dt;
@@ -101,6 +111,7 @@ void updatePlayer(Player *player, float dt) {
     if (player->stateTimer >= 0.1f) {
       player->state = PLAYER_ATTACKING;
     }
+    updateCamera(camera, player);
     break;
   case PLAYER_ATTACKING:
     player->stateTimer += dt;
@@ -115,7 +126,7 @@ void updatePlayer(Player *player, float dt) {
       player->spriteLine = 0;
       player->state = PLAYER_IDLE;
     }
-
+    updateCamera(camera, player);
     break;
   case PLAYER_ATTACK_STOP:
     break;
@@ -127,6 +138,7 @@ void updatePlayer(Player *player, float dt) {
       player->onGround = false;
       player->state = PLAYER_JUMPING;
     }
+    updateCamera(camera, player);
     break;
   case PLAYER_JUMPING:
     player->spriteLine = 5;
@@ -145,11 +157,13 @@ void updatePlayer(Player *player, float dt) {
       player->stateTimer = 0;
       player->spriteFrame = 6;
     }
+    updateCamera(camera, player);
     handleWalk(player, dt);
     break;
   case PLAYER_JUMP_LAND:
     player->spriteFrame = 7;
     player->state = PLAYER_IDLE;
+    updateCamera(camera, player);
     break;
   }
 }
