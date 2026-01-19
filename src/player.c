@@ -35,6 +35,7 @@ void handleWalk(Player *player, float dt) {
   }
 
   if (IsKeyDown(KEY_LEFT)) {
+    if (player->rect.x <= 10) return;
     player->rect.x -= player->speed * dt;
     player->direction = -1;
   }

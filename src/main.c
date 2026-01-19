@@ -65,7 +65,7 @@ int main() {
       updateAndDrawGameplay(&player, enemies, enemiesCount, dt, &gameState,
                             &camera);
       allowMenuToBePaused(&gameState);
-      infobar();
+      infobar(&player);
       break;
     case SCREEN_GAMEOVER:
       break;

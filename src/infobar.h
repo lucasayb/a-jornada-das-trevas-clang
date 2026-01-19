@@ -1,6 +1,6 @@
 #ifndef INFOBAR_H
 #define INFOBAR_H
-
-void infobar();
+#include "player.h"
+void infobar(Player *player);
 
 #endif
