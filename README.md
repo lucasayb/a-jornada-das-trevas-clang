@@ -54,7 +54,7 @@ a-jaqueta-das-trevas/
 │   ├── player.c/h    # Player mechanics and sword
 │   ├── enemy.c/h     # Enemy entity
 │   ├── physics.c/h   # Physics simulation
-│   ├── ground.c/h    # Terrain rendering
+│   ├── map.c/h    # Terrain rendering
 │   ├── debug.c/h     # Debug overlay
 │   └── config.h      # Configuration constants
 └── build/

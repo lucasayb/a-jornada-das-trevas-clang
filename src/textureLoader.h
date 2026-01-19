@@ -5,6 +5,7 @@
 extern Texture2D playerTexture;
 extern Texture2D enemyTexture;
 extern Texture2D backgroundTexture;
+extern Texture2D tilesTexture;
 
 void loadGameplayTextures();
 void unloadGameplayTextures();
