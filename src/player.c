@@ -48,9 +48,12 @@ void handleAttack(Player *player) {
 }
 
 void updateCamera(Camera2D *camera, Player *player) {
-  if (player->rect.x > camera->target.x + 100) {
-    camera->target.x = player->rect.x - 200;
-    // camera->target.x = (Vector2){ player->rect.x, player->rect.y };
+  float rightLimit = camera->target.x + 100;
+  float leftLimit = camera->target.x - 0;
+  if (player->rect.x > rightLimit) {
+    camera->target.x += player->rect.x - rightLimit;
+  } else if (player->rect.x < leftLimit) {
+    camera->target.x += player->rect.x - leftLimit;
   }
 }
 
