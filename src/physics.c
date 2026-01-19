@@ -13,19 +13,18 @@ void applyPhysics(Player *player, float dt) {
   // Y = 720  <- fundo da tela
 
   player->vy += GRAVITY * dt;        // Aumenta a velocidade vertical
-  player->rect.y += player->vy * dt; // Aplica a velocidade na posição
-  float floorY = GROUND_Y - player->rect.height;
 
   int tileX = (player->rect.x + player->rect.width / 2) / TILE_SIZE;
-  int tileY = (player->rect.y + player->rect.height) / TILE_SIZE;
-
+  float nextY = player->rect.y + player->vy * dt;
+  int futureTileY = (nextY + player->rect.height) / TILE_SIZE;
 
   // if (player->rect.y > floorY) {
-  if (isSolid(tileX, tileY)) {
-    player->rect.y = tileY * TILE_SIZE - player->rect.height;
+  if (isSolid(tileX, futureTileY) && player->vy > 0) {
+    player->rect.y = futureTileY * TILE_SIZE - player->rect.height;
     player->vy = 0.0f;
     player->onGround = true;
   } else {
+    player->rect.y = nextY;
     player->onGround = false;
   }
 }
