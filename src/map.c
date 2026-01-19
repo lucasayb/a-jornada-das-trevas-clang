@@ -28,7 +28,11 @@ int map[MAP_ROWS][MAP_COLS] = {
 };
 
 bool isSolid(int x, int y) {
+
   if (map[y][x] == 0) {
+    return false;
+  }
+  if (map[y - 1][x] != 0 && map[y][x] != 0) {
     return false;
   }
   return true;
