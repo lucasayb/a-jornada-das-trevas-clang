@@ -4,5 +4,5 @@
 #include "player.h"
 #include "gameState.h"
 
-void updateAndDrawGameplay(Player *player, Enemy *enemies, int enemiesQuantity, float dt, GameScreen *gameState);
+void updateAndDrawGameplay(Player *player, Enemy *enemies, int enemiesCount, float dt, GameScreen *gameState);
 #endif

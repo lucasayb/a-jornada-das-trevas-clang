@@ -20,11 +20,12 @@ int main() {
   Player player;
   Enemy enemy;
 
+  Vector3 enemiesParams[] = {{GetRandomValue(0, 1280), GROUND_Y - 52 * 2.5, 1},
+                             {GetRandomValue(0, 1280), GROUND_Y - 52 * 2.5, 1}};
 
-  Vector3 enemiesParams[MAX_ENEMIES] = {{400, GROUND_Y - 52 * 2.5, 1},
-                             {400, GROUND_Y - 52 * 2.5, 1}};
+  int enemiesCount = sizeof(enemiesParams) / sizeof(enemiesParams[0]);
 
-  Enemy enemies[MAX_ENEMIES];
+  Enemy enemies[enemiesCount];
 
   SetExitKey(KEY_NULL);
   while (!WindowShouldClose() && gameState != EXITING) {
@@ -37,7 +38,7 @@ int main() {
         }
         gameState = SCREEN_GAMEPLAY;
         player = createPlayer(100, GROUND_Y - 50);
-        for (int i = 0; i < sizeof(enemies); i++) {
+        for (int i = 0; i < enemiesCount; i++) {
           enemies[i] = createEnemy(enemiesParams[i].x, enemiesParams[i].y,
                                    enemiesParams[i].z);
         }
@@ -54,11 +55,11 @@ int main() {
       drawTitleScreen();
       break;
     case SCREEN_PAUSED:
-      updateAndDrawGameplay(&player, enemies, MAX_ENEMIES, dt, &gameState);
+      updateAndDrawGameplay(&player, enemies, enemiesCount, dt, &gameState);
       drawStartMenu(&gameState);
       break;
     case SCREEN_GAMEPLAY:
-      updateAndDrawGameplay(&player, enemies, MAX_ENEMIES, dt, &gameState);
+      updateAndDrawGameplay(&player, enemies, enemiesCount, dt, &gameState);
       allowMenuToBePaused(&gameState);
       infobar();
       break;
