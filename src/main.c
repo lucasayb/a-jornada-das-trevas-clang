@@ -4,11 +4,13 @@
 #include "game.h"
 #include "gameState.h"
 #include "infobar.h"
+#include "map.h"
 #include "physics.h"
 #include "player.h"
 #include "startMenu.h"
 #include "textureLoader.h"
 #include "titleScreen.h"
+#include <cjson/cJSON.h>
 #include <raylib.h>
 #include <stdio.h>
 
@@ -25,7 +27,7 @@ int main() {
                              {GetRandomValue(0, 1280), GROUND_Y - 52 * 2.5, 1}};
 
   int enemiesCount = sizeof(enemiesParams) / sizeof(enemiesParams[0]);
-
+  Map map = getFileMap();
   Enemy enemies[enemiesCount];
   Camera2D camera = createCamera();
   camera.target.y = (float)SCREEN_HEIGHT / 2;
@@ -58,12 +60,12 @@ int main() {
       break;
     case SCREEN_PAUSED:
       updateAndDrawGameplay(&player, enemies, enemiesCount, dt, &gameState,
-                            &camera);
+                            &camera, &map);
       drawStartMenu(&gameState);
       break;
     case SCREEN_GAMEPLAY:
       updateAndDrawGameplay(&player, enemies, enemiesCount, dt, &gameState,
-                            &camera);
+                            &camera, &map);
       allowMenuToBePaused(&gameState);
       infobar(&player);
       break;

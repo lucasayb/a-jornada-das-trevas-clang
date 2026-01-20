@@ -1,6 +1,7 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
+#include "map.h"
 #include <raylib.h>
 
 typedef enum {
@@ -25,9 +26,9 @@ typedef struct {
 } Enemy;
 
 Enemy createEnemy(float x, float y, int direction);
-void updateEnemy(Enemy *enemy, float dt);
+void updateEnemy(Map *map, Enemy *enemy, float dt);
 void drawEnemy(Enemy *enemy);
-void enableMovement(Enemy *enemy);
+void enableMovement(Map *map, Enemy *enemy);
 void moveEnemy(Enemy *enemy, int pos);
 
 void drawEnemyHealthBar(Enemy *enemy);

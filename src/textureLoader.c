@@ -9,7 +9,7 @@ void loadGameplayTextures() {
   playerTexture = LoadTexture("./assets/textures/jacket.png");
   enemyTexture = LoadTexture("./assets/textures/enemy.png");
   backgroundTexture = LoadTexture("./assets/textures/background.png");
-  tilesTexture = LoadTexture("./assets/textures/tileset.png");
+  tilesTexture = LoadTexture("./assets/textures/spritesheet.png");
 }
 
 void unloadGameplayTextures() {

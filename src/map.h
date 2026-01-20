@@ -1,49 +1,40 @@
 #ifndef MAP_H
 #define MAP_H
-#include "physics.h"
+#include "config.h"
+#include <cjson/cJSON.h>
 #include <raylib.h>
-
 #define MAP_ROWS 11
 #define MAP_COLS 50
 #define TILE_SIZE 64
+#define LAYERS_COUNT 10
+#define TILES_COUNT 300
 
-typedef enum {
-  EMPTY = 0,
-
-  // GRASS
-  GTL, GT, GTR,
-  GL, GM, GR,
-  GBL, GB, GBR,
-
-  // DIRT
-  TTL, TT, TTR,
-  TL, TM, TR,
-  TBL, TB, TBR,
-
-  // ROCKS
-  PTL, PT, PTR,
-  PL, PM, PR,
-  PBL, PB, PBR,
-
-  // FLOATING GRASS
-  FGTL,
-  FGT,
-  FGTR,
-
-  // FLOATING ROCKS
-  FRTL,
-  FRT,
-  FRTR
-} TileType;
-
-bool isSolid(int x, int y);
 
 typedef struct {
+  char id[5];
   int x;
   int y;
-} TileInfo;
+} MapLayerTile;
+
+typedef struct {
+  char name[60];
+  MapLayerTile tiles[300];
+  bool collider;
+  int tilesCount;
+} MapLayer;
+
+typedef struct {
+  int tileSize;
+  int mapWidth;
+  int mapHeight;
+  int layersCount;
+  MapLayer layers[LAYERS_COUNT];
+  bool collisionGrid[SCREEN_HEIGHT][SCREEN_WIDTH];
+} Map;
 
 void drawTile(int spriteLine, int spriteFrame, int positionX, int positionY);
-void drawMap();
+Map getFileMap();
+void drawMap(Map *map);
+bool isSolid(Map *map, int x, int y);
 
 #endif

@@ -32,7 +32,7 @@ void drawEnemyHealthBar(Enemy *enemy) {
   DrawRectangleLines(enemy->healthbarRect.x, enemy->healthbarRect.y, healthbarWidth, healbarSizeHeight, BLACK);
 }
 
-void updateEnemy(Enemy *enemy, float dt) {
+void updateEnemy(Map *map, Enemy *enemy, float dt) {
   if (!enemy->isAlive) return;
   switch (enemy->state) {
   case ENEMY_IDLE:
@@ -51,7 +51,7 @@ void updateEnemy(Enemy *enemy, float dt) {
     }
     break;
   case ENEMY_WALKING:
-    enableMovement(enemy);
+    enableMovement(map, enemy);
     enemy->stateTimer += dt;
     enemy->spriteLine = 1;
     if (enemy->stateTimer > 0.1f) {
@@ -83,21 +83,23 @@ void moveEnemy(Enemy *enemy, int pos) {
   enemy->healthbarRect.x = enemy->rect.x + healthbarX;
 }
 
-void enableMovement(Enemy *enemy) {
+void enableMovement(Map *map, Enemy *enemy) {
   int enemyTileX = (enemy->rect.x + enemy->rect.width / 2) / TILE_SIZE;
   int enemyTileY = (enemy->rect.y + enemy->rect.height) / TILE_SIZE;
-
-  if (!isSolid(enemyTileX + 1, enemyTileY) && enemy->direction == -1) {
-    enemy->direction = 1;
-  } else if (!isSolid(enemyTileX - 1, enemyTileY) && enemy->direction == 1) {
-    enemy->direction = -1;
-  }
+  // int enemyLimitLeft = enemyTileX - ;
+  // int enemyLimitRight = enemyTileX + GetRandomValue(1, 5);
 
   if (enemy->rect.x + enemy->rect.width >= SCREEN_WIDTH) {
     enemy->direction = 1;
-  } else if ((enemy->rect.x <= 0)) {
+  } else if (enemy->rect.x <= 0) {
     enemy->direction = -1;
   }
+
+  if (!isSolid(map, enemyTileX, enemyTileY)) {
+    enemy->rect.y += 10;
+    enemy->healthbarRect.y += 10;
+  }
+
   if (enemy->direction == 1) {
     moveEnemy(enemy, -5);
   } else {
