@@ -50,7 +50,8 @@ int main() {
     }
     BeginDrawing();
     ClearBackground(WHITE);
-    Rectangle backgroundSource = {0, 0, 240, 160};
+    SetTextureWrap(backgroundTexture, TEXTURE_WRAP_REPEAT);
+    Rectangle backgroundSource = {0, 0, (float) SCREEN_WIDTH / 2, (float) SCREEN_HEIGHT / 2};
     Rectangle backgroundDest = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
     DrawTexturePro(backgroundTexture, backgroundSource, backgroundDest,
                    (Vector2){0, 0}, 0, WHITE);

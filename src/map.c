@@ -22,14 +22,14 @@ bool isSolid(Map *map, int x, int y) {
 Map getFileMap() {
   FILE *fptr;
 
-  fptr = fopen("./assets/data/levels/phase1.json", "r");
+  fptr = fopen("./assets/data/levels/map.json", "r");
 
   if (fptr == NULL) {
     printf("Error opening file!\n");
     return (Map){0};
   }
 
-  char buffer[20 * 1024];
+  char buffer[20 * 4024];
 
   size_t bytesRead = fread(buffer, 1, sizeof(buffer) - 1, fptr);
   buffer[bytesRead] = '\0';
