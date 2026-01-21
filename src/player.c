@@ -31,8 +31,11 @@ void handleJump(Player *player) {
   }
 }
 
-void handleWalk(Player *player, float dt) {
+void handleWalk(Map *map, Player *player, float dt) {
   if (IsKeyDown(KEY_RIGHT)) {
+    float mapWidth = map->mapWidth * map->tileSize * TILE_SCALE;
+    float mapRightLimit = mapWidth - 100;
+    if (player->rect.x >= mapRightLimit) return;
     player->rect.x += player->speed * dt;
     player->direction = 1;
   }
@@ -104,7 +107,7 @@ void updatePlayer(Map *map, Player *player, float dt, Camera2D *camera) {
 
     handleJump(player);
     handleAttack(player);
-    handleWalk(player, dt);
+    handleWalk(map, player, dt);
     updateCamera(map, camera, player);
     break;
   case PLAYER_ATTACKED:
@@ -120,7 +123,7 @@ void updatePlayer(Map *map, Player *player, float dt, Camera2D *camera) {
     }
     handleJump(player);
     handleAttack(player);
-    handleWalk(player, dt);
+    handleWalk(map, player, dt);
     updateCamera(map, camera, player);
     break;
   case PLAYER_ATTACK_PREPARE:
@@ -176,7 +179,7 @@ void updatePlayer(Map *map, Player *player, float dt, Camera2D *camera) {
       player->spriteFrame = 6;
     }
     updateCamera(map, camera, player);
-    handleWalk(player, dt);
+    handleWalk(map, player, dt);
     break;
   case PLAYER_JUMP_LAND:
     player->spriteFrame = 7;

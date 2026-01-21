@@ -43,10 +43,14 @@ Player createPlayer(float x, float y);
 
 Sword createSword(Player *player);
 
+void handleWalk(Map *map, Player *player, float dt);
+
 void updatePlayer(Map *map, Player *player, float dt, Camera2D *camera);
 
 void updateCamera(Map *map, Camera2D *camera, Player *player);
 
 void drawPlayer(Player *player);
+
+
 
 #endif
