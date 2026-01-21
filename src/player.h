@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "map.h"
 #include <raylib.h>
 
 typedef enum {
@@ -42,7 +43,9 @@ Player createPlayer(float x, float y);
 
 Sword createSword(Player *player);
 
-void updatePlayer(Player *player, float dt, Camera2D *camera);
+void updatePlayer(Map *map, Player *player, float dt, Camera2D *camera);
+
+void updateCamera(Map *map, Camera2D *camera, Player *player);
 
 void drawPlayer(Player *player);
 

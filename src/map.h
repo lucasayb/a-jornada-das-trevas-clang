@@ -8,7 +8,7 @@
 #define TILE_SIZE 64
 #define LAYERS_COUNT 15
 #define TILES_COUNT 1000
-
+#define TILE_SCALE 4
 
 typedef struct {
   char id[10];

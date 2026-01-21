@@ -1,4 +1,7 @@
 #include "player.h"
+#include "config.h"
+#include "camera.h"
+#include "map.h"
 #include "textureLoader.h"
 #include <raylib.h>
 #include <stdio.h>
@@ -49,7 +52,7 @@ void handleAttack(Player *player) {
   }
 }
 
-void updateCamera(Camera2D *camera, Player *player) {
+void updateCamera(Map *map, Camera2D *camera, Player *player) {
   float rightLimit = camera->target.x + 100;
   float leftLimit = camera->target.x - 0;
   if (player->rect.x > rightLimit) {
@@ -57,9 +60,19 @@ void updateCamera(Camera2D *camera, Player *player) {
   } else if (player->rect.x < leftLimit) {
     camera->target.x += player->rect.x - leftLimit;
   }
+
+  float mapWidth = map->mapWidth * map->tileSize * TILE_SCALE;
+  float mapRightLimit = mapWidth - SCREEN_WIDTH;
+
+  if (camera->target.x < CAMERA_X_OFFSET) {
+    camera->target.x = CAMERA_X_OFFSET;
+  }
+  if (camera->target.x > mapRightLimit + CAMERA_X_OFFSET) {
+    camera->target.x = mapRightLimit + CAMERA_X_OFFSET;
+  }
 }
 
-void updatePlayer(Player *player, float dt, Camera2D *camera) {
+void updatePlayer(Map *map, Player *player, float dt, Camera2D *camera) {
   switch (player->state) {
   case PLAYER_IDLE:
     player->stateTimer += dt;
@@ -69,7 +82,7 @@ void updatePlayer(Player *player, float dt, Camera2D *camera) {
     }
     handleJump(player);
     handleAttack(player);
-    updateCamera(camera, player);
+    updateCamera(map, camera, player);
     break;
   case PLAYER_WALKING:
     player->spriteLine = 3;
@@ -92,7 +105,7 @@ void updatePlayer(Player *player, float dt, Camera2D *camera) {
     handleJump(player);
     handleAttack(player);
     handleWalk(player, dt);
-    updateCamera(camera, player);
+    updateCamera(map, camera, player);
     break;
   case PLAYER_ATTACKED:
     player->stateTimer += dt;
@@ -108,7 +121,7 @@ void updatePlayer(Player *player, float dt, Camera2D *camera) {
     handleJump(player);
     handleAttack(player);
     handleWalk(player, dt);
-    updateCamera(camera, player);
+    updateCamera(map, camera, player);
     break;
   case PLAYER_ATTACK_PREPARE:
     player->stateTimer += dt;
@@ -116,7 +129,7 @@ void updatePlayer(Player *player, float dt, Camera2D *camera) {
     if (player->stateTimer >= 0.1f) {
       player->state = PLAYER_ATTACKING;
     }
-    updateCamera(camera, player);
+    updateCamera(map, camera, player);
     break;
   case PLAYER_ATTACKING:
     player->stateTimer += dt;
@@ -131,7 +144,7 @@ void updatePlayer(Player *player, float dt, Camera2D *camera) {
       player->spriteLine = 0;
       player->state = PLAYER_IDLE;
     }
-    updateCamera(camera, player);
+    updateCamera(map, camera, player);
     break;
   case PLAYER_ATTACK_STOP:
     break;
@@ -143,7 +156,7 @@ void updatePlayer(Player *player, float dt, Camera2D *camera) {
       player->onGround = false;
       player->state = PLAYER_JUMPING;
     }
-    updateCamera(camera, player);
+    updateCamera(map, camera, player);
     break;
   case PLAYER_JUMPING:
     player->spriteLine = 5;
@@ -162,13 +175,13 @@ void updatePlayer(Player *player, float dt, Camera2D *camera) {
       player->stateTimer = 0;
       player->spriteFrame = 6;
     }
-    updateCamera(camera, player);
+    updateCamera(map, camera, player);
     handleWalk(player, dt);
     break;
   case PLAYER_JUMP_LAND:
     player->spriteFrame = 7;
     player->state = PLAYER_IDLE;
-    updateCamera(camera, player);
+    updateCamera(map, camera, player);
     break;
   }
 }

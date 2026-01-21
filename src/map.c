@@ -122,12 +122,11 @@ void drawMap(Map *map) {
       int spritesheetCols = tilesTexture.width / map->tileSize;
       int spriteX = id % spritesheetCols;
       int spriteY = id / spritesheetCols;
-      float scale = 4;
       Rectangle source = {spriteX * map->tileSize, spriteY * map->tileSize,
                           map->tileSize, map->tileSize};
-      Rectangle dest = {tile->x * map->tileSize * scale,
-                        tile->y * map->tileSize * scale, map->tileSize * scale,
-                        map->tileSize * scale};
+      Rectangle dest = {tile->x * map->tileSize * TILE_SCALE,
+                        tile->y * map->tileSize * TILE_SCALE, map->tileSize * TILE_SCALE,
+                        map->tileSize * TILE_SCALE};
       DrawTexturePro(tilesTexture, source, dest, (Vector2){0}, 0, WHITE);
     }
   }

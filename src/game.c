@@ -11,7 +11,7 @@ void updateAndDrawGameplay(Player *player, Enemy *enemies, int enemiesCount,
 
   if (*gameState != SCREEN_PAUSED) {
     applyPhysics(map, player, dt);
-    updatePlayer(player, dt, camera);
+    updatePlayer(map, player, dt, camera);
     for (int i = 0; i < enemiesCount; i++) {
       Enemy *enemy = &enemies[i];
       updateEnemy(map, enemy, dt);
