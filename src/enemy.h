@@ -26,9 +26,9 @@ typedef struct {
 } Enemy;
 
 Enemy createEnemy(float x, float y, int direction);
-void updateEnemy(Map *map, Enemy *enemy, float dt);
+void updateEnemy(Map *map, Enemy *enemy, float dt, float targetX);
 void drawEnemy(Enemy *enemy);
-void enableMovement(Map *map, Enemy *enemy);
+void enableMovement(Map *map, Enemy *enemy, float targetX);
 void moveEnemy(Enemy *enemy, int pos);
 
 void drawEnemyHealthBar(Enemy *enemy);

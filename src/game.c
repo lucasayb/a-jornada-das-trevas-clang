@@ -14,7 +14,7 @@ void updateAndDrawGameplay(Player *player, Enemy *enemies, int enemiesCount,
     updatePlayer(map, player, dt, camera);
     for (int i = 0; i < enemiesCount; i++) {
       Enemy *enemy = &enemies[i];
-      updateEnemy(map, enemy, dt);
+      updateEnemy(map, enemy, dt, player->rect.x);
       Combat combat = {.player = player, .enemy = enemy, .stateTimer = 0};
       updateCombat(&combat, dt);
     }

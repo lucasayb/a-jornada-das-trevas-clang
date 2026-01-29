@@ -4,6 +4,7 @@
 #include "textureLoader.h"
 #include <stdio.h>
 #include <raylib.h>
+#include <math.h>
 
 int healthbarX = 35;
 
@@ -32,7 +33,7 @@ void drawEnemyHealthBar(Enemy *enemy) {
   DrawRectangleLines(enemy->healthbarRect.x, enemy->healthbarRect.y, healthbarWidth, healbarSizeHeight, BLACK);
 }
 
-void updateEnemy(Map *map, Enemy *enemy, float dt) {
+void updateEnemy(Map *map, Enemy *enemy, float dt, float targetX) {
   if (!enemy->isAlive) return;
   switch (enemy->state) {
   case ENEMY_IDLE:
@@ -51,7 +52,7 @@ void updateEnemy(Map *map, Enemy *enemy, float dt) {
     }
     break;
   case ENEMY_WALKING:
-    enableMovement(map, enemy);
+    enableMovement(map, enemy, targetX);
     enemy->stateTimer += dt;
     enemy->spriteLine = 1;
     if (enemy->stateTimer > 0.1f) {
@@ -83,28 +84,56 @@ void moveEnemy(Enemy *enemy, int pos) {
   enemy->healthbarRect.x = enemy->rect.x + healthbarX;
 }
 
-void enableMovement(Map *map, Enemy *enemy) {
+void enableMovement(Map *map, Enemy *enemy, float targetX) {
   int enemyTileX = (enemy->rect.x + enemy->rect.width / 2) / TILE_SIZE;
   int enemyTileY = (enemy->rect.y + enemy->rect.height) / TILE_SIZE;
   // int enemyLimitLeft = enemyTileX - ;
   // int enemyLimitRight = enemyTileX + GetRandomValue(1, 5);
 
-  if (enemy->rect.x + enemy->rect.width >= SCREEN_WIDTH) {
-    enemy->direction = 1;
-  } else if (enemy->rect.x <= 0) {
+  float dx = targetX - enemy->rect.x;
+
+  printf("Dx:");
+  printf("%f\n", dx);
+
+  if (dx > 0) {
+    // Inimigo está a direita
     enemy->direction = -1;
+
+  } else {
+    // Inimigo está a esquerda
+    enemy->direction = 1;
   }
+
+
+  // Pego o valor absoluto. Assim eu sei a distäncia sem me importar se é positiva o negativa.
+  float distance = fabsf(dx);
+
+
+  if (distance < 50) {
+    // perto o suficiente. Idle e attack
+    enemy->state = ENEMY_ATTACKING;
+  } else {
+    // longe: continua perseguindo
+    moveEnemy(enemy, dx > 0 ? 5 : -5);
+    enemy->state = ENEMY_WALKING;
+  }
+
+  /* if (enemy->rect.x + enemy->rect.width >= targetX) { */
+  /*   moveEnemy(enemy, -5); */
+  /* } else { */
+  /*   moveEnemy(enemy, 5); */
+  /* } */
 
   if (!isSolid(map, enemyTileX, enemyTileY)) {
     enemy->rect.y += 10;
     enemy->healthbarRect.y += 10;
   }
 
-  if (enemy->direction == 1) {
-    moveEnemy(enemy, -5);
-  } else {
-    moveEnemy(enemy, 5);
-  }
+  /* if (enemy->direction == 1) { */
+  /*   moveEnemy(enemy, -5); */
+  /* } else { */
+  /*   moveEnemy(enemy, 5); */
+  /* } */
 }
 
 void drawEnemy(Enemy *enemy) {

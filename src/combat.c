@@ -28,27 +28,27 @@ void updateCombat(Combat *combat, float dt) {
     }
   }
 
-  if (combat->player->invencibleTimer <= 0) {
-    Rectangle collisionRect;
-    float collisionWidth = 35;
+  /* if (combat->player->invencibleTimer <= 0) { */
+  /*   Rectangle collisionRect; */
+  /*   float collisionWidth = 35; */
 
-    if (combat->enemy->direction == 1) {
-      collisionRect.x = combat->enemy->rect.x - collisionWidth + 50;
-    } else {
-      collisionRect.x = combat->enemy->rect.x + combat->enemy->rect.width - 50;
-    }
+  /*   if (combat->enemy->direction == 1) { */
+  /*     collisionRect.x = combat->enemy->rect.x - collisionWidth + 50; */
+  /*   } else { */
+  /*     collisionRect.x = combat->enemy->rect.x + combat->enemy->rect.width - 50; */
+  /*   } */
 
-    collisionRect.y = combat->enemy->rect.y;
-    collisionRect.width = collisionWidth;
-    collisionRect.height = combat->enemy->rect.height;
+  /*   collisionRect.y = combat->enemy->rect.y; */
+  /*   collisionRect.width = collisionWidth; */
+  /*   collisionRect.height = combat->enemy->rect.height; */
 
-    if (CheckCollisionRecs(collisionRect, combat->player->rect)) {
-      if (combat->enemy->spriteFrame == 5) {
-        combat->enemy->state = ENEMY_ATTACKING;
-        combat->player->state = PLAYER_ATTACKED;
-        combat->player->health -= 5;
-        combat->player->invencibleTimer = 1.0f;
-      }
-    }
-  }
+  /*   if (CheckCollisionRecs(collisionRect, combat->player->rect)) { */
+  /*     if (combat->enemy->spriteFrame == 5) { */
+  /*       combat->enemy->state = ENEMY_ATTACKING; */
+  /*       combat->player->state = PLAYER_ATTACKED; */
+  /*       combat->player->health -= 5; */
+  /*       combat->player->invencibleTimer = 1.0f; */
+  /*     } */
+  /*   } */
+  /* } */
 }
